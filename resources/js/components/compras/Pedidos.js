@@ -30,16 +30,9 @@ class Pedidos extends Component {
     enviarpedidos(event) {
         event.preventDefault();
         const formData = new FormData()
-        formData.append('cupo', this.state.formCupo)
-        formData.append('agen_hora_final', this.state.formHoraFinal)
-        formData.append('pedidos_observ', this.state.formapedidosObser)
-        formData.append('pedidos_hora_inicio', this.state.formapedidosHoraInicio)
-        formData.append('agent_medi_estado', this.state.formpedidosEstado)
-        formData.append('datos', JSON.stringify(this.state.selectedOption))
-        formData.append('medico_medico_cod_1', this.state.formpedidosMedico)
-        formData.append('especialidades_espec_cod_1', this.state.formEspec)
-
-        if (this.state.formapedidosHoraInicio != '' && this.state.formCupo != '' && this.state.formHoraFinal != '' && this.state.formapedidosObser != '') {
+        formData.append('proveedor_cod_prov', this.state.formProveedor)
+        formData.append('lista_pedido',JSON.stringify( this.state.list))
+        if (this.state.formProveedor != '' &&  this.state.list != '') {
             axios.post('/pedidos/insert', formData).then(response => {
                 if (response.data.success == true) {
                     this.setState({ modal: false })
@@ -192,6 +185,9 @@ class Pedidos extends Component {
                     edit: false,
                     modalDelete: false,
                     formpedidosEstado: '',
+                    formCantidad:'',
+                    selectedOption:null,
+                    list: []
 
                 })
         }
@@ -225,7 +221,7 @@ class Pedidos extends Component {
                     selectedOption: ''
 
                 });
-                console.log(this.state.list);
+                //console.log(this.state.list);
             } else {
                 //   // Si alguno de los inputs se encuentra vacio
                 //   // se mostrará el siguiente mensaje en la consola del navegador

@@ -70,7 +70,7 @@ Route::post('/agenda/delete','AgendaController@delete')->name('agenda');
  * para realizar las pruebas
  * 
  */
-Route::get('/prueba','AgendaController@prueba')->name('agenda');
+Route::get('/prueba','PedidosController@prueba')->name('agenda');
 
 /**
  * rutas de pedidos de compras
@@ -79,4 +79,5 @@ Route::get('/prueba','AgendaController@prueba')->name('agenda');
  * 
  */
 
-Route::get('/pedidos','PedidosController@get_pedidos')->name('agenda');
+Route::get('/pedidos','PedidosController@get_pedidos')->name('pedidos');
+Route::post('/pedidos/insert','PedidosController@create')->name('pedidos');

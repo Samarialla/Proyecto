@@ -3,6 +3,7 @@ import Axios from 'axios';
 import Pagination from "react-js-pagination";
 import Modal from 'react-bootstrap4-modal';
 import Select from 'react-select';
+import { serialize, deserialize } from "react-serialize"
 
 class Pedidos extends Component {
 
@@ -16,30 +17,57 @@ class Pedidos extends Component {
             validacion: '',
             edit: false,
             modalDelete: false,
+            modalDeletedetalle:false,
             search: '',
             color: '',
             formProveedor: '',
+            formMercaderia: '',
+            formMercaderiaName: '',
             selectedOption: null,
-            mercaderia: '',
+            mercaderias: '',
             formCantidad: '',
-            list: []
+            list: [],
+            lista: [],
+            mercad: [],
+            additem: '',
+            productoagregado: [],
+            formCodigoDetalle:''
         };
 
     }
 
     enviarpedidos(event) {
         event.preventDefault();
-        const formData = new FormData()
+        const formData = new FormData();
+        formData.append('cod_pedido', this.state.formCodigo)
         formData.append('proveedor_cod_prov', this.state.formProveedor)
-        formData.append('lista_pedido',JSON.stringify( this.state.list))
-        if (this.state.formProveedor != '' &&  this.state.list != '') {
+        formData.append('mercaderia', this.state.selectedOption.value)
+        formData.append('cantidad', this.state.formCantidad)
+
+        if (this.state.formProveedor != '' && this.state.selectedOption != '' && this.state.formCantidad != '') {
             axios.post('/pedidos/insert', formData).then(response => {
                 if (response.data.success == true) {
-                    this.setState({ modal: false })
-                    this.getdata();
+                    if (this.state.formCodigo > 0) {
+                        this.state.formCodigo;
+                        this.setState({ selectedOption: '', formCantidad: '' });
+                    } else {
+                        this.setState({
+                            formCodigo: response.data.insertid,
+                            selectedOption: '',
+                            formCantidad: ''
+                        });
+                    }
+                    formData.append('cod_pedido_pedido', this.state.formCodigo)
+                    axios.post('/pedidos/get_detalle', formData).then(response => {
+                        this.setState({ lista: response.data });
+                        console.log(this.state.lista);
+                    }).catch(error => {
+                        alert("Error " + error);
+                    })
+
                 }
             }).catch(error => {
-                console("Error " + error);
+                alert("Error " + error);
             })
         } else {
             this.setState({ validacion: 'Campo obligatorio' })
@@ -71,24 +99,31 @@ class Pedidos extends Component {
     //         this.setState({ validacion: 'Campo obligatorio' })
     //     }
     // }
-    // enviarDeletepedidos(event) {
-    //     event.preventDefault();
-    //     const formData = new FormData()
-    //     formData.append('agend_cod_1', this.state.formCodigo)
+    enviarDeletepedidos_detalle(event) {
+        event.preventDefault();
+        const formData = new FormData()
+        formData.append('ped_det_cod', this.state.formCodigoDetalle);
+        formData.append('cod_pedido_pedido', this.state.formCodigo)
 
-    //     if (this.state.formCodigo != '') {
-    //         axios.post('/pedidos/delete', formData).then(response => {
-    //             if (response.data.success == true) {
-    //                 this.setState({ modalDelete: false })
-    //                 this.getdata();
-    //             }
-    //         }).catch(error => {
-    //             console.log("Error " + error);
-    //         })
-    //     } else {
-    //         this.setState({ validacion: 'Campo obligatorio' })
-    //     }
-    // }
+        if (this.state.formCodigoDetalle != '') {
+            axios.post('/pedidos/delete_detalle', formData).then(response => {
+                if (response.data.success == true) {
+                    this.setState({ modalDeletedetalle: false })
+                    axios.post('/pedidos/get_detalle',formData).then(response => {
+                        this.setState({ lista: response.data });
+                        console.log(this.state.lista);
+                    }).catch(error => {
+                        alert("Error " + error);
+                    })
+
+                }
+            }).catch(error => {
+                console.log("Error " + error);
+            })
+        } else {
+            this.setState({ validacion: 'Campo obligatorio' })
+        }
+    }
 
 
     //carga  los datos al renderizar el componente
@@ -124,7 +159,7 @@ class Pedidos extends Component {
     async getdataMercaderia() {
         const url = '/mercaderia';
         Axios.get(url).then(response => {
-            this.setState({ mercaderia: response.data })
+            this.setState({ mercaderias: response.data })
 
         }).catch(error => {
             alert("Error " + error)
@@ -142,16 +177,19 @@ class Pedidos extends Component {
         )
 
     }
+   
 
     /// si no se le asgina el stare por defecto a una constante a realizar render el componente no encuentra el data de la api
     render() {
         const { pedidos } = this.state;
         const { modal } = this.state;
         const { modalDelete } = this.state;
+        const {modalDeletedetalle}=this.state;
         const { proveedores } = this.state;
         const { selectedOption } = this.state;
-        const { data, current_page, per_page, total, to, from } = this.state.mercaderia;
+        const { mercaderias } = this.state;
         const { codigo, producto, cantidad, list } = this.state;
+        const { data, current_page, per_page, total, to, from } = this.state.mercaderias;
 
 
         const handleChangeOption = selectedOption => {
@@ -185,11 +223,13 @@ class Pedidos extends Component {
                     edit: false,
                     modalDelete: false,
                     formpedidosEstado: '',
-                    formCantidad:'',
-                    selectedOption:null,
+                    formCantidad: '',
+                    selectedOption: null,
+                    formMercaderia: '',
                     list: []
 
                 })
+                this.getdata();
         }
 
         // escucha a los values
@@ -199,39 +239,15 @@ class Pedidos extends Component {
         const handleChangeCantidad = (event) => {
             this.setState({ formCantidad: event.target.value });
         }
-        const agregarProducto = (event) => {
-            event.preventDefault();
-            //console.log(event);
-            // Para que no se refresque la página por el onSubmit del formulario
-            // ;
-            const { tour, pax, price, list } = this.state;
-            const pro = this.state.formProveedor;
-            const mer = this.state.selectedOption;
-            const cant = this.state.formCantidad
 
-
-            // Simple validación para que tour, pax y price sean campos requeridos
-            if (this.state.formProveedor != '' && this.state.selectedOption != '' && this.state.formCantidad != '') {
-                const id = list.length + 1;
-                // En los states se agrega un nuevo objeto a "list"
-                // y se reinicia el estado de tour, pax y price
-                this.setState({
-                    list: [...list, { id, pro, mer, cant }],
-                    formCantidad: '',
-                    selectedOption: ''
-
-                });
-                //console.log(this.state.list);
-            } else {
-                //   // Si alguno de los inputs se encuentra vacio
-                //   // se mostrará el siguiente mensaje en la consola del navegador
-                console.log('Please complete all fields');
-            }
-
-
+        const handleOpenModalDeleteDetalle = (item) => {
+            this.setState({ modalDeletedetalle: true })
+            //Modal.setAppElement('body');
+            this.setState({
+                formCodigoDetalle: item.ped_det_cod,
+                formCodigo:item.pedido_cod_pedido
+            })
         }
-
-
 
         return (
 
@@ -259,6 +275,8 @@ class Pedidos extends Component {
                             {this.state.edit ? <h1>Editar pedidos</h1> : <h1>Nuevo pedidos</h1>}
                         </div>
                         <div className="modal-body">
+                            {/* {this.state.formCodigo} */}
+
                             <form className='container'>
                                 <div>
                                     <div className='form-group'>
@@ -275,6 +293,10 @@ class Pedidos extends Component {
                                 <div className='form-group'>
                                     <div>
                                         <label>Mercaderia *</label>
+                                        {/* <select name='' className="form-control " value={this.state.formMercaderia} onChange={handleChangeMercaderia}>
+                                            <option></option>
+                                            {mercaderias && this.cargarComboMercaderia()}
+                                        </select> */}
 
                                         <Select
                                             value={selectedOption}
@@ -296,7 +318,7 @@ class Pedidos extends Component {
                                     <span className='validacion'>{this.state.validacion}</span>
                                 </div>
                                 <div className="pax_btn">
-                                    <button type="" onClick={(event) => agregarProducto(event)} className="btn btn-primary">Agregar</button>
+                                    <button type="" onClick={(event) => this.enviarpedidos(event)} className="btn btn-primary">Agregar</button>
                                 </div>
                                 <hr></hr>
                                 <div>
@@ -311,13 +333,13 @@ class Pedidos extends Component {
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {this.state.list.map(item => (
+                                            {this.state.lista.map(item => (
 
-                                                <tr key={item.id}>
-                                                    <td>{item.id}</td>
-                                                    <td>{item.mer.label}</td>
-                                                    <td>{item.cant}</td>
-                                                    <td> <button className='btn btn-danger'><i className="fa fa-trash" aria-hidden="true"></i></button></td>
+                                                <tr key={item.ped_det_cod}>
+                                                    <td>{item.ped_det_cod}</td>
+                                                    <td>{item.merca_descr}</td>
+                                                    <td>{item.cantidad}</td>
+                                                    <td> <button className='btn btn-danger' onClick={() => handleOpenModalDeleteDetalle(item)}><i className="fa fa-trash" aria-hidden="true"></i></button></td>
                                                 </tr>
                                             ))}
                                         </tbody>
@@ -327,13 +349,14 @@ class Pedidos extends Component {
                             </form>
                         </div>
                         <div className="modal-footer">
-                            <button type="button" className="btn btn-secondary " data-dismiss="modal" onClick={handleCloseModal}>Cancelar</button>
+
                             {
                                 this.state.edit ?
                                     <button type="submit" className="btn btn-primary" onClick={(event) => this.enviarEditpedidos(event)} >Actualizar</button>
                                     :
-                                    <button type="submit" className="btn btn-primary" onClick={(event) => this.enviarpedidos(event)} >Guardar</button>
+                                    <button type="submit" className="btn btn-primary" onClick={handleCloseModal} >Guardar</button>
                             }
+                            <button type="button" className="btn btn-secondary " data-dismiss="modal" onClick={handleCloseModal}>Cancelar</button>
                         </div>
 
                     </Modal>
@@ -355,6 +378,21 @@ class Pedidos extends Component {
                         </div>
                     </div>
                 </Modal> */}
+
+                 <Modal visible={modalDeletedetalle} onClickBackdrop={handleCloseModal} className="">
+                    <div className='container'>
+                        <div className='modal-header'>
+                            <h3>Eliminar Productos de la Grill</h3>
+                        </div>
+                        <div className='modal-body'>
+                            <h3>¿Desea eliminar este Productos?</h3>
+                        </div>
+                        <div className='modal-footer'>
+                            <button type="button" className="btn btn-secondary " data-dismiss="modal" onClick={handleCloseModal}>Cancelar</button>
+                            <button className='btn btn-danger' onClick={(event) => this.enviarDeletepedidos_detalle(event)}>Eliminar</button>
+                        </div>
+                    </div>
+                </Modal>
 
             </>
         );

@@ -31,52 +31,75 @@ class PedidosController extends Controller
     public function create(Request $request)
     {
         $id = Auth::id(); // captura el dia del usuarrio logeado    
-        $datos = $request->input('lista_pedido');
+        $datos = $request->input('mercaderia');
+        $cod_pedido = $request->input('cod_pedido');
+        $cod_pedido_pedido = $request->input('cod_pedido_pedido');
 
-
-        $pedido =   PedidosModel::insert([
-            'proveedor_cod_prov' => $request->input('proveedor_cod_prov'),
-            'ped_estado' => 'ACTIVO',
-            'users_id' => $id
-        ]);
-        $codigo = PedidosModel::pluck('cod_pedido')->last();
-        foreach (json_decode($datos) as $row) {
-            $data=$row->mer;
-            for ($i=0; $i < $d=json_encode($data->value)  ; $i++) { 
-                var_dump($d[$i]['value']);
+        if ($cod_pedido == '' || $cod_pedido == null) {
+            $pedido =   PedidosModel::insert([
+                'proveedor_cod_prov' => $request->input('proveedor_cod_prov'),
+                'ped_estado' => 'ACTIVO',
+                'users_id' => $id,
+                //'datos_mercaderia' => $datos
+            ]);
+            $codigo = PedidosModel::pluck('cod_pedido')->last();
+            $pedido_detalle =    DB::table('pedido_detalle')->insert([
+                'mercaderia_mercaderia_cod' => $datos,
+                'cantidad' => $request->input('cantidad'),
+                'pedido_cod_pedido' =>  $codigo,
+            ]);
+            if ($pedido != '' || $pedido != null && $pedido_detalle != null) {
+                $response['message'] = "Actualizo exitosamente";
+                $response['success'] = true;
+                $response['insertid'] = $codigo;
+            } else {
+                $response['message'] = "No se Actualizo";
+                $response['success'] = false;
             }
+        } else {
+            $pedido_detalle =    DB::table('pedido_detalle')->insert([
+                'mercaderia_mercaderia_cod' => $datos,
+                'cantidad' => $request->input('cantidad'),
+                'pedido_cod_pedido' =>  $cod_pedido_pedido==''?$cod_pedido:$cod_pedido_pedido,
+            ]);
+            if ($pedido_detalle != null) {
+                $response['message'] = "Actualizo exitosamente el detalle";
+                $response['success'] = true;
+                //$response['insertid'] = $codigo;
+            } else {
+                $response['message'] = "No se Actualizo";
+                $response['success'] = false;
             }
-        
-                // $pedido_detalle =    DB::table('pedido_detalle')->insert([
-                //     'mercaderia_mercaderia_cod' => $field->value,
-                //     'cantidad' => $field->can,
-                //     'pedido_cod_pedido' =>  $codigo,
-                // ]);
-                //var_dump($datos[$i]);
-                
-            
-        
-
-        // if ($pedido != '' || $pedido != null && $pedido_detalle != null) {
-        //     $response['message'] = "Actualizo exitosamente";
-        //     $response['success'] = true;
-        // } else {
-        //     $response['message'] = "No se Actualizo";
-        //     $response['success'] = false;
-        // }
-        // return $response;
+        }
+        return $response;
     }
 
-     public function prueba(){
-     $datos=   '[{"id":1,"pro":"1","mer":{"value":1,"label":"CABLE"},"cant":"123"},{"id":2,"pro":"1","mer":{"value":2,"label":"PELO"},"cant":"12"}]';
-     foreach(json_decode($datos) as $v){
-         $d= ($v->mer);
-         var_dump($d[2]);
-        //  foreach(($d) as $i){
-        //     //var_dump(( $i));
-        //  }
-       
-    //     foreach()
-      }
+    public function lista_detalle(Request $request)
+    {
+        
+        $id_pedido = $request->input('cod_pedido_pedido')=='undefined'? $request->input('cod_pedido'):$request->input('cod_pedido_pedido');
+        $cod_pedido = $request->input('cod_pedido');
+        $productos = DB::table('pedido_detalle  as pd')
+            ->join('mercaderia as m', 'm.mercaderia_cod', '=', 'pd.mercaderia_mercaderia_cod')
+            ->select('*')->where('pd.pedido_cod_pedido',  $id_pedido)->get();
+        return response()->json($productos);
+
+        // return response()->json($productos);
+
     }
+
+
+    public function delete(Request $request)
+    {
+
+        // eliminar los datos
+        DB::table('pedido_detalle')->where('ped_det_cod', $request->input('ped_det_cod'))->delete();
+
+        // respesta de JSON
+        $response['message'] = "Actualizo exitosamente";
+        $response['success'] = true;
+
+        return $response;
+    }
+    
 }

@@ -52,7 +52,7 @@ class AgendaMedica extends Component {
         formData.append('agenda_observ', this.state.formaAgendaObser)
         formData.append('agenda_hora_inicio', this.state.formaAgendaHoraInicio)
         formData.append('agent_medi_estado', this.state.formAgendaEstado)
-        formData.append('datos',JSON.stringify(this.state.selectedOption))
+        formData.append('datos',JSON.stringify([this.state.selectedOption]))
         formData.append('medico_medico_cod_1', this.state.formAgendaMedico)
         formData.append('especialidades_espec_cod_1', this.state.formEspec)
 

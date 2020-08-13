@@ -8,8 +8,9 @@ class PedidosModel extends Model
 {
     protected $table='pedido';
 
-    protected $fillable=['cod_pedido','ped_estado', 'cod_prov', 'mercaderia', 'codigo' ];
+    protected $fillable=['cod_pedido','ped_estado', 'cod_prov', 'mercaderia', 'codigo','datos_mercaderia' ];
+    
     protected $casts = [
-        'mer' => 'array',
+        'datos_mercaderia' => 'array',
     ];
 }

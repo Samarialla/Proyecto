@@ -41,9 +41,10 @@ class DatosController extends Controller
         return response()->json($modulos);
     }
     public function get_mercaderia(){
-        $dias= DB::table('mercaderia')
+        $mercaderia= DB::table('mercaderia')
         ->select('mercaderia_cod AS value','merca_descr AS label')
+       //->select('*')
         ->paginate(50);
-        return response()->json($dias);
+        return response()->json($mercaderia);
     }
 }

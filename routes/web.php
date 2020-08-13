@@ -83,4 +83,5 @@ Route::get('/pedidos','PedidosController@get_pedidos')->name('pedidos');
 Route::post('/pedidos/insert','PedidosController@create')->name('pedidos');
 Route::post('/pedidos/get_detalle','PedidosController@lista_detalle')->name('pedidos');
 Route::post('/pedidos/delete_detalle','PedidosController@delete')->name('pedidos');
+Route::post('/pedidos/delete_pedido','PedidosController@delete_pedido')->name('pedidos');
 

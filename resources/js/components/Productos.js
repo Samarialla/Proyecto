@@ -245,6 +245,7 @@ class Productos extends Component {
                                 <label>Proveedor *</label> {this.state.formProveedor}
                                
                                 <select  name="prov_descr" className="form-control " value={this.state.formProveedor} onChange={handleChangeProveedor}>
+                                    <option></option>
                                 {proveedores && this.cargarCombo()}
                                 </select>
                             </div>

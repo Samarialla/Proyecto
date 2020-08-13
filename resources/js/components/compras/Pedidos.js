@@ -17,7 +17,7 @@ class Pedidos extends Component {
             validacion: '',
             edit: false,
             modalDelete: false,
-            modalDeletedetalle:false,
+            modalDeletedetalle: false,
             search: '',
             color: '',
             formProveedor: '',
@@ -31,9 +31,29 @@ class Pedidos extends Component {
             mercad: [],
             additem: '',
             productoagregado: [],
-            formCodigoDetalle:''
+            formCodigoDetalle: ''
         };
 
+    }
+
+    //carga  los datos al renderizar el componente
+    async componentDidMount() {
+        await this.getdata();
+        await this.getdataProveedor();
+        await this.getdataMercaderia();
+
+    }
+
+    //obtenemos los datos de uri
+    async getdata(pageNumber = 1) {
+        const url = `/pedidos?page=${pageNumber}`;
+        Axios.get(url).then(response => {
+            this.setState({ pedidos: response.data })
+            //console.log(response.data)
+
+        }).catch(error => {
+            alert("Error " + error)
+        })
     }
 
     enviarpedidos(event) {
@@ -60,7 +80,7 @@ class Pedidos extends Component {
                     formData.append('cod_pedido_pedido', this.state.formCodigo)
                     axios.post('/pedidos/get_detalle', formData).then(response => {
                         this.setState({ lista: response.data });
-                        console.log(this.state.lista);
+                        //console.log(this.state.lista);
                     }).catch(error => {
                         alert("Error " + error);
                     })
@@ -109,7 +129,7 @@ class Pedidos extends Component {
             axios.post('/pedidos/delete_detalle', formData).then(response => {
                 if (response.data.success == true) {
                     this.setState({ modalDeletedetalle: false })
-                    axios.post('/pedidos/get_detalle',formData).then(response => {
+                    axios.post('/pedidos/get_detalle', formData).then(response => {
                         this.setState({ lista: response.data });
                         console.log(this.state.lista);
                     }).catch(error => {
@@ -125,26 +145,29 @@ class Pedidos extends Component {
         }
     }
 
+    enviarDeletepedidos(event) {
+        event.preventDefault();
+        const formData = new FormData()
+        formData.append('cod_pedido_pedido', this.state.formCodigo)
 
-    //carga  los datos al renderizar el componente
-    async componentDidMount() {
-        await this.getdata();
-        await this.getdataProveedor();
-        await this.getdataMercaderia();
+        if (this.state.formCodigo != '') {
+            axios.post('/pedidos/delete_pedido', formData).then(response => {
+                if (response.data.success == true) {
+                    this.setState({ modalDelete: false });
+                    this.getdata();
 
+                }
+            }).catch(error => {
+                console.log("Error " + error);
+            })
+        } else {
+            this.setState({ validacion: 'Campo obligatorio' })
+        }
     }
 
-    //obtenemos los datos de uri
-    async getdata(pageNumber = 1) {
-        const url = `/pedidos?page=${pageNumber}`;
-        Axios.get(url).then(response => {
-            this.setState({ pedidos: response.data })
-            //console.log(response.data)
 
-        }).catch(error => {
-            alert("Error " + error)
-        })
-    }
+
+
     //obtenemos el proveedor
 
     async getdataProveedor() {
@@ -177,14 +200,14 @@ class Pedidos extends Component {
         )
 
     }
-   
+
 
     /// si no se le asgina el stare por defecto a una constante a realizar render el componente no encuentra el data de la api
     render() {
         const { pedidos } = this.state;
         const { modal } = this.state;
         const { modalDelete } = this.state;
-        const {modalDeletedetalle}=this.state;
+        const { modalDeletedetalle } = this.state;
         const { proveedores } = this.state;
         const { selectedOption } = this.state;
         const { mercaderias } = this.state;
@@ -229,7 +252,7 @@ class Pedidos extends Component {
                     list: []
 
                 })
-                this.getdata();
+            this.getdata();
         }
 
         // escucha a los values
@@ -245,7 +268,16 @@ class Pedidos extends Component {
             //Modal.setAppElement('body');
             this.setState({
                 formCodigoDetalle: item.ped_det_cod,
-                formCodigo:item.pedido_cod_pedido
+                formCodigo: item.pedido_cod_pedido
+            })
+        }
+
+        const handleOpenModalDelete = (item) => {
+            this.setState({ modalDelete: true })
+            //Modal.setAppElement('body');
+            this.setState({
+                formCodigoDetalle: item.ped_det_cod,
+                formCodigo: item.pedido_cod_pedido
             })
         }
 
@@ -364,22 +396,22 @@ class Pedidos extends Component {
 
 
 
-                {/* <Modal visible={modalDelete} onClickBackdrop={handleCloseModal} className="">
+                <Modal visible={modalDelete} onClickBackdrop={handleCloseModal} className="">
                     <div className='container'>
                         <div className='modal-header'>
-                            <h3>Eliminar Productos</h3>
+                            <h3>Actualizar Pedidos</h3>
                         </div>
                         <div className='modal-body'>
-                            <h3>¿Desea eliminar este Productos?</h3>
+                            <h3>¿Desea actualizar este este?</h3>
                         </div>
                         <div className='modal-footer'>
                             <button type="button" className="btn btn-secondary " data-dismiss="modal" onClick={handleCloseModal}>Cancelar</button>
                             <button className='btn btn-danger' onClick={(event) => this.enviarDeletepedidos(event)}>Eliminar</button>
                         </div>
                     </div>
-                </Modal> */}
+                </Modal>
 
-                 <Modal visible={modalDeletedetalle} onClickBackdrop={handleCloseModal} className="">
+                <Modal visible={modalDeletedetalle} onClickBackdrop={handleCloseModal} className="">
                     <div className='container'>
                         <div className='modal-header'>
                             <h3>Eliminar Productos de la Grill</h3>
@@ -436,7 +468,7 @@ class Pedidos extends Component {
             this.setState({ modalDelete: true })
             //Modal.setAppElement('body');
             this.setState({
-                formCodigo: pedidos.agend_cod_1,
+                formCodigo: pedidos.cod_pedido,
             })
 
         }

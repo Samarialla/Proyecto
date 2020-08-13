@@ -101,5 +101,25 @@ class PedidosController extends Controller
 
         return $response;
     }
+
+    public function delete_pedido(Request $request)
+    {
+
+        $pedidos =    DB::table('pedido')->where('cod_pedido', $request->input('cod_pedido_pedido'))->update([
+            'ped_estado' => 'ANULADO',
+          ]);
+        if ($pedidos != '') {
+            $response['message'] = "Actualizo exitosamente";
+            $response['success'] = true;
+        } else {
+            $response['message'] = "No se Actualizo";
+            $response['success'] = false;
+           // var_dump($mercaderia);
+        }
+        // respesta de JSON
+
+
+        return $response;
+    }
     
 }

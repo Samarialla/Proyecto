@@ -79,15 +79,16 @@ class Menu extends Component {
                                     <Tab.Pane eventKey="#Clientes">
                                         <Clientes />
                                     </Tab.Pane>
-                                    <Tab.Pane eventKey="#Agenda">
-                                        <AgendaMedica />
-                                    </Tab.Pane>
-                                    <Tab.Pane eventKey="#Pedidos">
-                                        <Pedidos />
-                                    </Tab.Pane>
                                     <Tab.Pane eventKey="#Productos">
                                         <Productos/>
                                     </Tab.Pane>
+                                    {/* <Tab.Pane eventKey="#Agenda">
+                                        <AgendaMedica />
+                                    </Tab.Pane> */}
+                                    <Tab.Pane eventKey="#Pedidos">
+                                        <Pedidos />
+                                    </Tab.Pane>
+                                   
                                     
                                 </Tab.Content>
                             </div>

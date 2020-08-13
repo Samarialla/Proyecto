@@ -23,7 +23,7 @@ class ProductosController extends Controller
             'merca_descr' => $request->input('merca_descr'),
             'merc_preciov' => $request->input('merc_preciov'),
             'precioc' => $request->input('precioc'),
-            'cod_prov' => $request->input('cod_prov'),
+            'cod_provedor' => $request->input('cod_prov'),
         ]);
 
         $response['message'] = "Guardo exitosamente";
@@ -39,7 +39,7 @@ class ProductosController extends Controller
             'merca_descr' => $request->input('merca_descr'),
             'merc_preciov' => $request->input('merc_preciov'),
             'precioc' => $request->input('precioc'),
-            'cod_prov' => $request->input('cod_prov'),
+            'cod_provedor' => $request->input('cod_prov'),
           ]);
         if ($mercaderia != '') {
             $response['message'] = "Actualizo exitosamente";

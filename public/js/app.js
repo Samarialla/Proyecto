@@ -84663,9 +84663,7 @@ var Pedidos = /*#__PURE__*/function (_Component) {
       }, this.state.edit ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("button", {
         type: "submit",
         className: "btn btn-primary",
-        onClick: function onClick(event) {
-          return _this8.enviarEditpedidos(event);
-        }
+        onClick: handleCloseModal
       }, "Actualizar") : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("button", {
         type: "submit",
         className: "btn btn-primary",
@@ -84745,18 +84743,25 @@ var Pedidos = /*#__PURE__*/function (_Component) {
         return campo.toLowerCase().indexOf(_this9.state.search.toLowerCase()) > -1;
       });
 
-      var editpedidos = function editpedidos(agen) {
-        //console.log(agen);
-        _this9.setState({
-          modal: true
-        });
+      var editpedidos = function editpedidos(pedidos) {
+        //console.log(pedidos);
+        var formData = new FormData();
 
         _this9.setState({
-          edit: true
+          modal: true,
+          edit: true,
+          formCodigo: pedidos.cod_pedido,
+          formProveedor: pedidos.proveedor_cod_prov
         });
 
-        _this9.setState({
-          formCodigo: agen.agend_cod_1
+        formData.append('cod_pedido_pedido', pedidos.cod_pedido);
+        axios.post('/pedidos/get_detalle', formData).then(function (response) {
+          _this9.setState({
+            lista: response.data
+          }); //console.log(this.state.lista);
+
+        })["catch"](function (error) {
+          alert("Error " + error);
         });
       };
 
@@ -84767,7 +84772,8 @@ var Pedidos = /*#__PURE__*/function (_Component) {
 
 
         _this9.setState({
-          formCodigo: pedidos.cod_pedido
+          formCodigo: pedidos.cod_pedido,
+          formProveedor: pedidos.prov_descr
         });
       };
 

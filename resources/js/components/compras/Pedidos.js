@@ -384,7 +384,7 @@ class Pedidos extends Component {
 
                             {
                                 this.state.edit ?
-                                    <button type="submit" className="btn btn-primary" onClick={(event) => this.enviarEditpedidos(event)} >Actualizar</button>
+                                    <button type="submit" className="btn btn-primary" onClick={handleCloseModal} >Actualizar</button>
                                     :
                                     <button type="submit" className="btn btn-primary" onClick={handleCloseModal} >Guardar</button>
                             }
@@ -452,13 +452,21 @@ class Pedidos extends Component {
             )
         });
 
-        const editpedidos = (agen) => {
-            //console.log(agen);
-            this.setState({ modal: true })
-            this.setState({ edit: true })
+        const editpedidos = (pedidos) => {
+            //console.log(pedidos);
+            const formData = new FormData()
             this.setState({
-                formCodigo: agen.agend_cod_1,
-
+                modal: true,
+                edit: true,
+                formCodigo: pedidos.cod_pedido,
+                formProveedor: pedidos.proveedor_cod_prov
+            })
+            formData.append('cod_pedido_pedido', pedidos.cod_pedido);
+            axios.post('/pedidos/get_detalle', formData).then(response => {
+                this.setState({ lista: response.data });
+                //console.log(this.state.lista);
+            }).catch(error => {
+                alert("Error " + error);
             })
 
         }
@@ -469,6 +477,7 @@ class Pedidos extends Component {
             //Modal.setAppElement('body');
             this.setState({
                 formCodigo: pedidos.cod_pedido,
+                formProveedor: pedidos.prov_descr
             })
 
         }

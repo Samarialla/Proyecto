@@ -15,6 +15,7 @@ import AgendaMedica from "./agendaMedica/AgendaMedica";
 import Axios from 'axios';
 import Pedidos from "./compras/Pedidos";
 import Productos from "./Productos";
+import Orden_Compras from "./compras/Orden_Compras";
 
 /*
 notas se pueder realizar que el nav bar y el secundarios esten esten el mismo compente asi para evitar el problema de child 
@@ -82,9 +83,9 @@ class Menu extends Component {
                                     <Tab.Pane eventKey="#Productos">
                                         <Productos/>
                                     </Tab.Pane>
-                                    {/* <Tab.Pane eventKey="#Agenda">
-                                        <AgendaMedica />
-                                    </Tab.Pane> */}
+                                    <Tab.Pane eventKey="#Orden_Compras">
+                                        <Orden_Compras />
+                                    </Tab.Pane>
                                     <Tab.Pane eventKey="#Pedidos">
                                         <Pedidos />
                                     </Tab.Pane>

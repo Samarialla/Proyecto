@@ -47,4 +47,25 @@ class DatosController extends Controller
         ->paginate(50);
         return response()->json($mercaderia);
     }
+
+    public function get_pedidos_compras(){
+        $pedidos= DB::table('pedido as p')
+        ->select('cod_pedido AS value', DB::raw("concat(cod_pedido,'.',pr.prov_descr, ' ', p.ped_fecha) AS label"))
+        ->join('proveedor as pr', 'pr.cod_prov', '=', 'p.proveedor_cod_prov')
+        ->where('ped_estado', 'Activo')
+        ->paginate(50);
+        return response()->json($pedidos);
+    }
+
+    public function get_proveedor_pedidos(Request $request){
+        $id= $request->input('cod_pedido_pedido');
+        $pedidos= DB::table('pedido as p')
+        ->select('pr.prov_descr')
+        ->join('proveedor as pr', 'pr.cod_prov', '=', 'p.proveedor_cod_prov')
+        ->where('ped_estado', 'Activo')
+        ->where('p.cod_pedido',$id )
+        //->paginate(1);
+        ->get();
+        return response()->json($pedidos);
+    }
 }

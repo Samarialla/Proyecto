@@ -49,6 +49,8 @@ Route::get('/especialidades','API\DatosController@get_especialidad')->name('espe
 Route::get('/dias','API\DatosController@get_dias')->name('dias');
 Route::get('/mercaderia','API\DatosController@get_mercaderia')->name('mercaderia');
 Route::get('/modulos','API\DatosController@modulos')->name('modulos');
+Route::get('/pedidos_compras','API\DatosController@get_pedidos_compras')->name('pedidos');
+Route::post('/pedidos_compras_proveedor','API\DatosController@get_proveedor_pedidos')->name('pedidos');
 
 
 
@@ -85,3 +87,10 @@ Route::post('/pedidos/get_detalle','PedidosController@lista_detalle')->name('ped
 Route::post('/pedidos/delete_detalle','PedidosController@delete')->name('pedidos');
 Route::post('/pedidos/delete_pedido','PedidosController@delete_pedido')->name('pedidos');
 
+/**
+ * 
+ * rutas de orden de compras
+ * 
+ */
+Route::get('/ordenes','Orden_ComprasController@get_ordenCompras')->name('ordenes_compras');
+Route::post('/ordenes/insert','Orden_ComprasController@create')->name('ordenes_compras');

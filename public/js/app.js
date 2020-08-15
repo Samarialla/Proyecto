@@ -82342,6 +82342,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_15___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_15__);
 /* harmony import */ var _compras_Pedidos__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./compras/Pedidos */ "./resources/js/components/compras/Pedidos.js");
 /* harmony import */ var _Productos__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./Productos */ "./resources/js/components/Productos.js");
+/* harmony import */ var _compras_Orden_Compras__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./compras/Orden_Compras */ "./resources/js/components/compras/Orden_Compras.js");
 
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -82369,6 +82370,7 @@ function _assertThisInitialized(self) { if (self === void 0) { throw new Referen
 function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
 
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
 
 
 
@@ -82499,6 +82501,8 @@ var Menu = /*#__PURE__*/function (_Component) {
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_Clientes__WEBPACK_IMPORTED_MODULE_3__["default"], null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react_bootstrap_Tab__WEBPACK_IMPORTED_MODULE_7__["default"].Pane, {
         eventKey: "#Productos"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_Productos__WEBPACK_IMPORTED_MODULE_17__["default"], null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react_bootstrap_Tab__WEBPACK_IMPORTED_MODULE_7__["default"].Pane, {
+        eventKey: "#Orden_Compras"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_compras_Orden_Compras__WEBPACK_IMPORTED_MODULE_18__["default"], null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react_bootstrap_Tab__WEBPACK_IMPORTED_MODULE_7__["default"].Pane, {
         eventKey: "#Pedidos"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_compras_Pedidos__WEBPACK_IMPORTED_MODULE_16__["default"], null))))))));
     }
@@ -84070,6 +84074,646 @@ var AgendaMedica = /*#__PURE__*/function (_Component) {
 
 /***/ }),
 
+/***/ "./resources/js/components/compras/Orden_Compras.js":
+/*!**********************************************************!*\
+  !*** ./resources/js/components/compras/Orden_Compras.js ***!
+  \**********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var react_js_pagination__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-js-pagination */ "./node_modules/react-js-pagination/dist/Pagination.js");
+/* harmony import */ var react_js_pagination__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(react_js_pagination__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var react_bootstrap4_modal__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-bootstrap4-modal */ "./node_modules/react-bootstrap4-modal/lib/index.js");
+/* harmony import */ var react_bootstrap4_modal__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(react_bootstrap4_modal__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var react_select__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react-select */ "./node_modules/react-select/dist/react-select.browser.esm.js");
+/* harmony import */ var react_serialize__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react-serialize */ "./node_modules/react-serialize/lib/index.js");
+/* harmony import */ var react_serialize__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(react_serialize__WEBPACK_IMPORTED_MODULE_6__);
+
+
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function () { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+
+
+
+
+
+
+
+var Orden_Compras = /*#__PURE__*/function (_Component) {
+  _inherits(Orden_Compras, _Component);
+
+  var _super = _createSuper(Orden_Compras);
+
+  function Orden_Compras(props) {
+    var _this;
+
+    _classCallCheck(this, Orden_Compras);
+
+    _this = _super.call(this, props);
+    _this.state = {
+      dias: '',
+      ordenes_c: null,
+      modal: false,
+      formCodigo: '',
+      validacion: '',
+      edit: false,
+      modalDelete: false,
+      modalDeletedetalle: false,
+      search: '',
+      color: '',
+      formProveedor: '',
+      formMercaderia: '',
+      formMercaderiaName: '',
+      selectedOption: null,
+      pedidos: '',
+      formCantidad: '',
+      list: [],
+      lista: [],
+      mercad: [],
+      additem: '',
+      productoagregado: [],
+      formCodigoPedido: ''
+    };
+    return _this;
+  } //carga  los datos al renderizar el componente
+
+
+  _createClass(Orden_Compras, [{
+    key: "componentDidMount",
+    value: function () {
+      var _componentDidMount = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _context.next = 2;
+                return this.getdata();
+
+              case 2:
+                _context.next = 4;
+                return this.getdatapedidos();
+
+              case 4:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+
+      function componentDidMount() {
+        return _componentDidMount.apply(this, arguments);
+      }
+
+      return componentDidMount;
+    }() //obtenemos los datos de uri
+
+  }, {
+    key: "getdata",
+    value: function () {
+      var _getdata = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+        var _this2 = this;
+
+        var pageNumber,
+            url,
+            _args2 = arguments;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                pageNumber = _args2.length > 0 && _args2[0] !== undefined ? _args2[0] : 1;
+                url = "/ordenes?page=".concat(pageNumber);
+                axios__WEBPACK_IMPORTED_MODULE_2___default.a.get(url).then(function (response) {
+                  _this2.setState({
+                    ordenes_c: response.data
+                  }); //console.log(response.data)
+
+                })["catch"](function (error) {
+                  alert("Error " + error);
+                });
+
+              case 3:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
+      }));
+
+      function getdata() {
+        return _getdata.apply(this, arguments);
+      }
+
+      return getdata;
+    }()
+  }, {
+    key: "enviarordenes",
+    value: function enviarordenes(event) {
+      var _this3 = this;
+
+      event.preventDefault();
+      var formData = new FormData();
+      formData.append('cod_pedido', this.state.formCodigoPedido);
+
+      if (this.state.formCodigoPedido != '') {
+        axios.post('/ordenes/insert', formData).then(function (response) {
+          if (response.data.success == true) {
+            _this3.setState({
+              modal: false
+            });
+
+            _this3.getdata();
+          }
+        })["catch"](function (error) {
+          console.log("Error " + error);
+        });
+      } else {
+        this.setState({
+          validacion: 'Campo obligatorio'
+        });
+      }
+    }
+  }, {
+    key: "enviarDeleteordenes_c_detalle",
+    value: function enviarDeleteordenes_c_detalle(event) {
+      var _this4 = this;
+
+      event.preventDefault();
+      var formData = new FormData();
+      formData.append('ped_det_cod', this.state.formCodigoDetalle);
+      formData.append('cod_pedido_pedido', this.state.formCodigo);
+
+      if (this.state.formCodigoDetalle != '') {
+        axios.post('/ordenes_c/delete_detalle', formData).then(function (response) {
+          if (response.data.success == true) {
+            _this4.setState({
+              modalDeletedetalle: false
+            });
+
+            axios.post('/ordenes_c/get_detalle', formData).then(function (response) {
+              _this4.setState({
+                lista: response.data
+              });
+
+              console.log(_this4.state.lista);
+            })["catch"](function (error) {
+              alert("Error " + error);
+            });
+          }
+        })["catch"](function (error) {
+          console.log("Error " + error);
+        });
+      } else {
+        this.setState({
+          validacion: 'Campo obligatorio'
+        });
+      }
+    }
+  }, {
+    key: "getdatapedidos",
+    value: function () {
+      var _getdatapedidos = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
+        var _this5 = this;
+
+        var url;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                url = '/pedidos_compras';
+                axios__WEBPACK_IMPORTED_MODULE_2___default.a.get(url).then(function (response) {
+                  _this5.setState({
+                    pedidos: response.data
+                  });
+                })["catch"](function (error) {
+                  alert("Error " + error);
+                });
+
+              case 2:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3);
+      }));
+
+      function getdatapedidos() {
+        return _getdatapedidos.apply(this, arguments);
+      }
+
+      return getdatapedidos;
+    }() /// si no se le asgina el stare por defecto a una constante a realizar render el componente no encuentra el data de la api
+
+  }, {
+    key: "render",
+    value: function render() {
+      var _this6 = this;
+
+      var ordenes_c = this.state.ordenes_c;
+      var modal = this.state.modal;
+      var modalDelete = this.state.modalDelete;
+      var modalDeletedetalle = this.state.modalDeletedetalle;
+      var proveedores = this.state.proveedores;
+      var selectedOption = this.state.selectedOption; //const { pedidos } = this.state;
+
+      var _this$state = this.state,
+          codigo = _this$state.codigo,
+          producto = _this$state.producto,
+          cantidad = _this$state.cantidad,
+          list = _this$state.list;
+      var _this$state$pedidos = this.state.pedidos,
+          data = _this$state$pedidos.data,
+          current_page = _this$state$pedidos.current_page,
+          per_page = _this$state$pedidos.per_page,
+          total = _this$state$pedidos.total,
+          to = _this$state$pedidos.to,
+          from = _this$state$pedidos.from;
+
+      var handleChangeOption = function handleChangeOption(selectedOption) {
+        _this6.setState({
+          selectedOption: selectedOption
+        });
+
+        var formData = new FormData();
+        formData.append('cod_pedido_pedido', selectedOption.value);
+        axios.post('/pedidos/get_detalle', formData).then(function (response) {
+          _this6.setState({
+            lista: response.data,
+            formCodigoPedido: selectedOption.value
+          }); //console.log(this.state.lista);
+
+        })["catch"](function (error) {
+          alert("Error " + error);
+        });
+        axios.post('/pedidos_compras_proveedor', formData).then(function (response) {
+          //this.setState({ formProveedor: response.data });
+          //console.log(this.state.formProveedor);
+          response.data.map(function (prov, index) {
+            _this6.setState({
+              formProveedor: prov.prov_descr
+            });
+          });
+        })["catch"](function (error) {
+          alert("Error " + error);
+        });
+      }; // para realizar la busqueda
+
+
+      var buscador = function buscador(e) {
+        _this6.setState({
+          search: e.target.value
+        });
+      }; // abre el modal
+
+
+      var handleOpenModal = function handleOpenModal(event) {
+        event.preventDefault();
+
+        _this6.setState({
+          modal: true
+        });
+      }; //cierra el modal
+
+
+      var handleCloseModal = function handleCloseModal(event) {
+        event.preventDefault(); // se limpia para state para evitar error al cerrar o abrir el modal
+
+        _this6.setState({
+          modal: false,
+          formCodigo: '',
+          validacion: '',
+          edit: false,
+          modalDelete: false,
+          formordenes_cEstado: '',
+          formCantidad: '',
+          selectedOption: null,
+          formMercaderia: '',
+          list: []
+        });
+
+        _this6.getdata();
+      }; // escucha a los values
+
+
+      var handleChangeProveedor = function handleChangeProveedor(event) {
+        _this6.setState({
+          formProveedor: event.target.value
+        });
+      };
+
+      var handleChangeCantidad = function handleChangeCantidad(event) {
+        _this6.setState({
+          formCantidad: event.target.value
+        });
+      };
+
+      var handleOpenModalDeleteDetalle = function handleOpenModalDeleteDetalle(item) {
+        _this6.setState({
+          modalDeletedetalle: true
+        }); //Modal.setAppElement('body');
+
+
+        _this6.setState({
+          formCodigoDetalle: item.ped_det_cod,
+          formCodigo: item.pedido_cod_pedido
+        });
+      };
+
+      var handleOpenModalDelete = function handleOpenModalDelete(item) {
+        _this6.setState({
+          modalDelete: true
+        }); //Modal.setAppElement('body');
+
+
+        _this6.setState({
+          formCodigoDetalle: item.ped_det_cod,
+          formCodigo: item.pedido_cod_pedido
+        });
+      };
+
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_1___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+        className: "container"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+        className: "row"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("h1", null, "Ordenes de Compras")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("hr", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+        className: "row"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+        className: "m-1"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("button", {
+        className: "btn btn-success",
+        onClick: function onClick(event) {
+          return handleOpenModal(event);
+        }
+      }, "+ Nuevo Orden de Compras")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+        className: "offset-md-5 col-lg -10"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("input", {
+        className: "form-control col-lg -10",
+        label: "search",
+        icon: "search",
+        type: "text",
+        onChange: buscador,
+        placeholder: "Buscar ordenes_c de compras"
+      }))), ordenes_c && this.renderList()), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+        className: "modal_ordenes_c"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react_bootstrap4_modal__WEBPACK_IMPORTED_MODULE_4___default.a, {
+        visible: modal,
+        onClickBackdrop: handleCloseModal,
+        dialogClassName: "modal-dialog modal-lg"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+        className: "modal-header "
+      }, this.state.edit ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("h1", null, "Editar ordenes De Compras") : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("h1", null, "Nuevo Ordenes de Compras")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+        className: "modal-body"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("form", {
+        className: "container"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+        className: "form-group"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("label", null, "Buscar Pedidos de Compras *"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react_select__WEBPACK_IMPORTED_MODULE_5__["default"], {
+        value: selectedOption,
+        onChange: handleChangeOption,
+        options: data,
+        isSearchable: true,
+        placeholder: "Busqueda de Pedidos"
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("span", {
+        className: "validacion"
+      }, this.state.validacion)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+        className: "form-group"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("label", null, "Proveedor *"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("input", {
+        type: "text",
+        className: "form-control",
+        value: this.state.formProveedor,
+        disabled: true
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("span", {
+        className: "validacion"
+      }, this.state.validacion)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("hr", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("table", {
+        className: "table table-bordered order-table table table-striped table-responsive-xl"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("thead", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("th", {
+        scope: "col"
+      }, "#"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("th", {
+        scope: "col"
+      }, "Mercaderia"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("th", {
+        scope: "col"
+      }, "Cantidad"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("th", {
+        scope: "col"
+      }, "Precio"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("th", {
+        scope: "col"
+      }, "Total"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("tbody", null, this.state.lista.map(function (item) {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("tr", {
+          key: item.ped_det_cod
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("td", null, item.ped_det_cod), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("td", null, item.merca_descr), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("td", null, item.cantidad), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("td", null, item.precioc), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("td", null, item.precioc * item.cantidad));
+      })))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+        className: "modal-footer"
+      }, this.state.edit ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("button", {
+        type: "submit",
+        className: "btn btn-primary",
+        onClick: handleCloseModal
+      }, "Actualizar") : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("button", {
+        type: "submit",
+        className: "btn btn-primary",
+        onClick: function onClick(event) {
+          return _this6.enviarordenes(event);
+        }
+      }, "Guardar"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("button", {
+        type: "button",
+        className: "btn btn-secondary ",
+        "data-dismiss": "modal",
+        onClick: handleCloseModal
+      }, "Cancelar")))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react_bootstrap4_modal__WEBPACK_IMPORTED_MODULE_4___default.a, {
+        visible: modalDelete,
+        onClickBackdrop: handleCloseModal,
+        className: ""
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+        className: "container"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+        className: "modal-header"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("h3", null, "Actualizar ordenes_c")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+        className: "modal-body"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("h3", null, "\xBFDesea actualizar este este?")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+        className: "modal-footer"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("button", {
+        type: "button",
+        className: "btn btn-secondary ",
+        "data-dismiss": "modal",
+        onClick: handleCloseModal
+      }, "Cancelar"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("button", {
+        className: "btn btn-danger",
+        onClick: function onClick(event) {
+          return _this6.enviarDeleteordenes_c(event);
+        }
+      }, "Eliminar")))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react_bootstrap4_modal__WEBPACK_IMPORTED_MODULE_4___default.a, {
+        visible: modalDeletedetalle,
+        onClickBackdrop: handleCloseModal,
+        className: ""
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+        className: "container"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+        className: "modal-header"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("h3", null, "Eliminar Productos de la Grill")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+        className: "modal-body"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("h3", null, "\xBFDesea eliminar este Productos?")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+        className: "modal-footer"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("button", {
+        type: "button",
+        className: "btn btn-secondary ",
+        "data-dismiss": "modal",
+        onClick: handleCloseModal
+      }, "Cancelar"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("button", {
+        className: "btn btn-danger",
+        onClick: function onClick(event) {
+          return _this6.enviarDeleteordenes_c_detalle(event);
+        }
+      }, "Eliminar")))));
+    }
+  }, {
+    key: "renderList",
+    value: function renderList() {
+      var _this7 = this;
+
+      var _this$state$ordenes_c = this.state.ordenes_c,
+          data = _this$state$ordenes_c.data,
+          current_page = _this$state$ordenes_c.current_page,
+          per_page = _this$state$ordenes_c.per_page,
+          total = _this$state$ordenes_c.total,
+          to = _this$state$ordenes_c.to,
+          from = _this$state$ordenes_c.from;
+      var color = this.state.color; // busca la funcion de busqueda
+
+      var filter = data.filter(function (res) {
+        var provedor = res.prov_descr.toLowerCase();
+        var mercaderia = res.mercaderia.toLowerCase();
+        var estado = res.ped_estado;
+        var campo = mercaderia + ' ' + provedor; //console.log('lista');
+        //console.log(this.state.productos.data)
+
+        return campo.toLowerCase().indexOf(_this7.state.search.toLowerCase()) > -1;
+      });
+
+      var editordenes_c = function editordenes_c(ordenes_c) {
+        //console.log(ordenes_c);
+        var formData = new FormData();
+
+        _this7.setState({
+          modal: true,
+          edit: true,
+          formCodigo: ordenes_c.cod_pedido,
+          formProveedor: ordenes_c.proveedor_cod_prov
+        });
+
+        formData.append('cod_pedido_pedido', ordenes_c.cod_pedido);
+        axios.post('/ordenes_c/get_detalle', formData).then(function (response) {
+          _this7.setState({
+            lista: response.data
+          }); //console.log(this.state.lista);
+
+        })["catch"](function (error) {
+          alert("Error " + error);
+        });
+      };
+
+      var handleOpenModalDelete = function handleOpenModalDelete(ordenes_c) {
+        _this7.setState({
+          modalDelete: true
+        }); //Modal.setAppElement('body');
+
+
+        _this7.setState({
+          formCodigo: ordenes_c.cod_pedido,
+          formProveedor: ordenes_c.prov_descr
+        });
+      };
+
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_1___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+        className: ""
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("table", {
+        className: "table table-bordered order-table table table-striped table-responsive-xl  "
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("thead", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("th", null, "#"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("th", null, "Codigo Pedido"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("th", null, "Proveedor"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("th", null, "Mercaderia"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("th", null, "Fecha de pedido"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("th", null, "Fecha de Orden de Compra"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("th", null, "Estado"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("th", null, "Accion"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("tbody", {
+        id: "bodytable"
+      }, filter.map(function (ordenes, index) {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("tr", {
+          key: ordenes.orden_cod
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("td", null, ordenes.orden_cod), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("td", null, ordenes.cod_pedido), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("td", null, ordenes.prov_descr), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("td", null, ordenes.mercaderia), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("td", null, ordenes.ped_fecha), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("td", null, ordenes.fechaorden), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("span", {
+          style: {
+            backgroundColor: ordenes.color,
+            color: 'white'
+          }
+        }, ordenes.estado_orden)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("button", {
+          className: "btn btn-info",
+          onClick: function onClick() {
+            return editordenes_c(ordenes_c, _this7.setState({
+              edit: true
+            }));
+          }
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("i", {
+          className: "fa fa-pencil-square-o",
+          "aria-hidden": "true"
+        })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("button", {
+          className: "btn btn-danger",
+          onClick: function onClick() {
+            return handleOpenModalDelete(ordenes_c);
+          }
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("i", {
+          className: "fa fa-trash",
+          "aria-hidden": "true"
+        }))));
+      }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+        className: "d-flex justify-content-center"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("ul", {
+        className: ""
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react_js_pagination__WEBPACK_IMPORTED_MODULE_3___default.a, {
+        itemClass: "page-item",
+        linkClass: "page-link",
+        activePage: this.state.ordenes_c.current_page,
+        itemsCountPerPage: this.state.ordenes_c.per_page,
+        totalItemsCount: this.state.ordenes_c.total,
+        onChange: function onChange(pageNumber) {
+          return _this7.getdata(pageNumber);
+        }
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+        className: "totales_grid"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("p", {
+        className: ""
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("b", null, "Pagina : "), this.state.ordenes_c.current_page, " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("b", null, "de "), "  ", this.state.ordenes_c.to, " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("b", null, "Total de datos mostrado :"), " ", this.state.ordenes_c.total, " ")))));
+    }
+  }]);
+
+  return Orden_Compras;
+}(react__WEBPACK_IMPORTED_MODULE_1__["Component"]);
+
+/* harmony default export */ __webpack_exports__["default"] = (Orden_Compras);
+
+/***/ }),
+
 /***/ "./resources/js/components/compras/Pedidos.js":
 /*!****************************************************!*\
   !*** ./resources/js/components/compras/Pedidos.js ***!
@@ -84856,8 +85500,8 @@ var Pedidos = /*#__PURE__*/function (_Component) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\Sergio Amarilla\Desktop\Proyecto\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\Sergio Amarilla\Desktop\Proyecto\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\Users\Sergio0o\Desktop\Proyecto\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\Sergio0o\Desktop\Proyecto\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

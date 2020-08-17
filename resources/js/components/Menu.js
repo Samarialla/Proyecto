@@ -31,6 +31,7 @@ class Menu extends Component {
         super(props);
         this.state = {
             modulos: '',
+            estado: false
 
         }
 
@@ -87,7 +88,7 @@ class Menu extends Component {
                                         <Orden_Compras />
                                     </Tab.Pane>
                                     <Tab.Pane eventKey="#Pedidos">
-                                        <Pedidos />
+                                        <Pedidos estado = {this.state.estado} />
                                     </Tab.Pane>
                                    
                                     

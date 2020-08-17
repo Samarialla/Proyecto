@@ -81,7 +81,7 @@ class PedidosController extends Controller
         $cod_pedido = $request->input('cod_pedido');
         $productos = DB::table('pedido_detalle  as pd')
             ->join('mercaderia as m', 'm.mercaderia_cod', '=', 'pd.mercaderia_mercaderia_cod')
-            ->select('*')->where('pd.pedido_cod_pedido',  $id_pedido)->get();
+            ->select('*',  DB::raw('m.precioc * pd.cantidad AS total_pr'))->where('pd.pedido_cod_pedido',  $id_pedido)->get();
         return response()->json($productos);
 
         // return response()->json($productos);

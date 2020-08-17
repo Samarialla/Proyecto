@@ -14083,3 +14083,10 @@ label {
   height: 100% !important;
 }
 
+.total {
+  margin-left: 65% !important;
+  color: red;
+  font-size: 27px;
+  font-weight: bold;
+}
+

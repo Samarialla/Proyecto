@@ -24,7 +24,9 @@ class Orden_ComprasController extends Controller
                 'p.proveedor_cod_prov',
                 'pr.cod_prov',
                 'pr.prov_descr',
+                'o.datos_pedidos',
                 DB::raw("group_concat(merca_descr separator ' - ') as mercaderia"),
+                DB::raw("group_concat(p.cod_pedido,'.',pr.prov_descr,' ', p.ped_fecha) AS datos_proveedores"),
                 DB::raw(" CASE estado_orden
             WHEN 'ACTIVO' THEN 'blue'
             when 'ANULADO' then 'red'
@@ -45,6 +47,7 @@ class Orden_ComprasController extends Controller
             'estado_orden' => 'ACTIVO',
             'pedido_cod_pedido' => $cod_pedido,
             'users_id' => $id,
+            'datos_pedidos'=>$request->input('datos_pedidos')
          ]);
 
          $pedido = DB::table('pedido')->where('cod_pedido', $cod_pedido)->update([

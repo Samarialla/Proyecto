@@ -82411,7 +82411,8 @@ var Menu = /*#__PURE__*/function (_Component) {
 
     _this = _super.call(this, props);
     _this.state = {
-      modulos: ''
+      modulos: '',
+      estado: false
     };
     return _this;
   } //carga  los datos al renderizar el componente
@@ -82504,7 +82505,9 @@ var Menu = /*#__PURE__*/function (_Component) {
         eventKey: "#Orden_Compras"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_compras_Orden_Compras__WEBPACK_IMPORTED_MODULE_18__["default"], null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react_bootstrap_Tab__WEBPACK_IMPORTED_MODULE_7__["default"].Pane, {
         eventKey: "#Pedidos"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_compras_Pedidos__WEBPACK_IMPORTED_MODULE_16__["default"], null))))))));
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_compras_Pedidos__WEBPACK_IMPORTED_MODULE_16__["default"], {
+        estado: this.state.estado
+      }))))))));
     }
   }, {
     key: "renderModulos",
@@ -84164,7 +84167,9 @@ var Orden_Compras = /*#__PURE__*/function (_Component) {
       mercad: [],
       additem: '',
       productoagregado: [],
-      formCodigoPedido: ''
+      formCodigoPedido: '',
+      datos_proveedor: '',
+      total: 0
     };
     return _this;
   } //carga  los datos al renderizar el componente
@@ -84246,6 +84251,7 @@ var Orden_Compras = /*#__PURE__*/function (_Component) {
       event.preventDefault();
       var formData = new FormData();
       formData.append('cod_pedido', this.state.formCodigoPedido);
+      formData.append('datos_pedidos', JSON.stringify([this.state.selectedOption]));
 
       if (this.state.formCodigoPedido != '') {
         axios.post('/ordenes/insert', formData).then(function (response) {
@@ -84369,6 +84375,17 @@ var Orden_Compras = /*#__PURE__*/function (_Component) {
         var formData = new FormData();
         formData.append('cod_pedido_pedido', selectedOption.value);
         axios.post('/pedidos/get_detalle', formData).then(function (response) {
+          //console.log(response.data);
+          var total = 0;
+          response.data.map(function (item) {
+            total = total + item.precioc * item.cantidad;
+          });
+
+          _this6.setState({
+            total: total
+          }); // console.log(total);
+
+
           _this6.setState({
             lista: response.data,
             formCodigoPedido: selectedOption.value
@@ -84416,39 +84433,16 @@ var Orden_Compras = /*#__PURE__*/function (_Component) {
           validacion: '',
           edit: false,
           modalDelete: false,
-          formordenes_cEstado: '',
+          // formordenes_cEstado: '',
           formCantidad: '',
           selectedOption: null,
           formMercaderia: '',
-          list: []
+          list: [],
+          total: '',
+          formProveedor: ''
         });
 
         _this6.getdata();
-      }; // escucha a los values
-
-
-      var handleChangeProveedor = function handleChangeProveedor(event) {
-        _this6.setState({
-          formProveedor: event.target.value
-        });
-      };
-
-      var handleChangeCantidad = function handleChangeCantidad(event) {
-        _this6.setState({
-          formCantidad: event.target.value
-        });
-      };
-
-      var handleOpenModalDeleteDetalle = function handleOpenModalDeleteDetalle(item) {
-        _this6.setState({
-          modalDeletedetalle: true
-        }); //Modal.setAppElement('body');
-
-
-        _this6.setState({
-          formCodigoDetalle: item.ped_det_cod,
-          formCodigo: item.pedido_cod_pedido
-        });
       };
 
       var handleOpenModalDelete = function handleOpenModalDelete(item) {
@@ -84493,13 +84487,18 @@ var Orden_Compras = /*#__PURE__*/function (_Component) {
         dialogClassName: "modal-dialog modal-lg"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
         className: "modal-header "
-      }, this.state.edit ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("h1", null, "Editar ordenes De Compras") : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("h1", null, "Nuevo Ordenes de Compras")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+      }, this.state.edit ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("h1", null, "Ver  ordenes De Compras") : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("h1", null, "Nuevo Ordenes de Compras")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
         className: "modal-body"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("form", {
         className: "container"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
         className: "form-group"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("label", null, "Buscar Pedidos de Compras *"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react_select__WEBPACK_IMPORTED_MODULE_5__["default"], {
+      }, this.state.edit ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("input", {
+        type: "text",
+        className: "form-control",
+        value: this.state.datos_proveedor,
+        disabled: true
+      }) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("label", null, "Buscar Pedidos de Compras *"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react_select__WEBPACK_IMPORTED_MODULE_5__["default"], {
         value: selectedOption,
         onChange: handleChangeOption,
         options: data,
@@ -84532,7 +84531,9 @@ var Orden_Compras = /*#__PURE__*/function (_Component) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("tr", {
           key: item.ped_det_cod
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("td", null, item.ped_det_cod), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("td", null, item.merca_descr), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("td", null, item.cantidad), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("td", null, item.precioc), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("td", null, item.precioc * item.cantidad));
-      })))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+      }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("p", {
+        className: "ml-5 pl-5 total"
+      }, " Total : ", this.state.total)))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
         className: "modal-footer"
       }, this.state.edit ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("button", {
         type: "submit",
@@ -84607,7 +84608,8 @@ var Orden_Compras = /*#__PURE__*/function (_Component) {
           total = _this$state$ordenes_c.total,
           to = _this$state$ordenes_c.to,
           from = _this$state$ordenes_c.from;
-      var color = this.state.color; // busca la funcion de busqueda
+      var color = this.state.color;
+      var selectedOption = this.state.selectedOption; // busca la funcion de busqueda
 
       var filter = data.filter(function (res) {
         var provedor = res.prov_descr.toLowerCase();
@@ -84619,26 +84621,46 @@ var Orden_Compras = /*#__PURE__*/function (_Component) {
         return campo.toLowerCase().indexOf(_this7.state.search.toLowerCase()) > -1;
       });
 
-      var editordenes_c = function editordenes_c(ordenes_c) {
-        //console.log(ordenes_c);
+      var editordenes = function editordenes(ordenes) {
+        console.log(ordenes);
         var formData = new FormData();
 
         _this7.setState({
+          //selectedOption: ordenes.datos_pedidos,
           modal: true,
           edit: true,
-          formCodigo: ordenes_c.cod_pedido,
-          formProveedor: ordenes_c.proveedor_cod_prov
+          formCodigo: ordenes.cod_pedido,
+          formProveedor: ordenes.prov_descr,
+          datos_proveedor: ordenes.datos_proveedores,
+          selectedOption: ordenes.datos_pedidos
         });
 
-        formData.append('cod_pedido_pedido', ordenes_c.cod_pedido);
-        axios.post('/ordenes_c/get_detalle', formData).then(function (response) {
+        formData.append('cod_pedido_pedido', ordenes.cod_pedido);
+        axios.post('/pedidos/get_detalle', formData).then(function (response) {
+          //console.log(response.data);
+          var total = 0;
+          response.data.map(function (item) {
+            total = total + item.precioc * item.cantidad;
+          });
+
+          _this7.setState({
+            total: total
+          }); // console.log(total);
+
+
           _this7.setState({
             lista: response.data
-          }); //console.log(this.state.lista);
+          }); //console.log(this.state.selectedOption);
 
         })["catch"](function (error) {
           alert("Error " + error);
-        });
+        }); // this.state.lista.map((item) => {
+        //     let totales = 0;
+        //     totales = totales + (item.precioc * item.cantidad);
+        //     this.setState({total:totales});
+        //     //return true
+        // })
+        // console.log(this.state.total);
       };
 
       var handleOpenModalDelete = function handleOpenModalDelete(ordenes_c) {
@@ -84670,12 +84692,12 @@ var Orden_Compras = /*#__PURE__*/function (_Component) {
         }, ordenes.estado_orden)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("button", {
           className: "btn btn-info",
           onClick: function onClick() {
-            return editordenes_c(ordenes_c, _this7.setState({
+            return editordenes(ordenes, _this7.setState({
               edit: true
             }));
           }
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("i", {
-          className: "fa fa-pencil-square-o",
+          className: "fa fa-eye",
           "aria-hidden": "true"
         })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("button", {
           className: "btn btn-danger",
@@ -84782,6 +84804,7 @@ var Pedidos = /*#__PURE__*/function (_Component) {
     _classCallCheck(this, Pedidos);
 
     _this = _super.call(this, props);
+    console.log(props);
     _this.state = {
       dias: '',
       pedidos: null,
@@ -84804,7 +84827,8 @@ var Pedidos = /*#__PURE__*/function (_Component) {
       mercad: [],
       additem: '',
       productoagregado: [],
-      formCodigoDetalle: ''
+      formCodigoDetalle: '',
+      count: 0
     };
     return _this;
   } //carga  los datos al renderizar el componente
@@ -84842,7 +84866,11 @@ var Pedidos = /*#__PURE__*/function (_Component) {
       }
 
       return componentDidMount;
-    }() //obtenemos los datos de uri
+    }() // shouldComponentUpdate(nextProps, nextState){
+    //     return this.props.name !== nextProps.name ||
+    //       this.state.count !== nextState.count;
+    //   }
+    //obtenemos los datos de uri
 
   }, {
     key: "getdata",

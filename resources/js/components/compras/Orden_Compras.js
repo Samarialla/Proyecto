@@ -31,7 +31,9 @@ class Orden_Compras extends Component {
             mercad: [],
             additem: '',
             productoagregado: [],
-            formCodigoPedido: ''
+            formCodigoPedido: '',
+            datos_proveedor: '',
+            total: 0
         };
 
     }
@@ -60,12 +62,14 @@ class Orden_Compras extends Component {
         event.preventDefault();
         const formData = new FormData()
         formData.append('cod_pedido', this.state.formCodigoPedido)
+        formData.append('datos_pedidos', JSON.stringify([this.state.selectedOption]))
 
         if (this.state.formCodigoPedido != '') {
             axios.post('/ordenes/insert', formData).then(response => {
                 if (response.data.success == true) {
                     this.setState({ modal: false });
                     this.getdata();
+
 
                 }
             }).catch(error => {
@@ -102,7 +106,7 @@ class Orden_Compras extends Component {
         }
     }
 
-   
+
 
     async getdatapedidos() {
         const url = '/pedidos_compras';
@@ -137,9 +141,17 @@ class Orden_Compras extends Component {
 
             formData.append('cod_pedido_pedido', selectedOption.value);
             axios.post('/pedidos/get_detalle', formData).then(response => {
-                this.setState({ 
+                //console.log(response.data);
+                var total = 0;
+                response.data.map((item) => {
+                    total = total + (item.precioc * item.cantidad);
+                })
+                this.setState({ total: total });
+                // console.log(total);
+                this.setState({
                     lista: response.data,
-                    formCodigoPedido:selectedOption.value });
+                    formCodigoPedido: selectedOption.value
+                });
                 //console.log(this.state.lista);
             }).catch(error => {
                 alert("Error " + error);
@@ -182,32 +194,18 @@ class Orden_Compras extends Component {
                     validacion: '',
                     edit: false,
                     modalDelete: false,
-                    formordenes_cEstado: '',
+                    // formordenes_cEstado: '',
                     formCantidad: '',
                     selectedOption: null,
                     formMercaderia: '',
-                    list: []
+                    list: [],
+                    total: '',
+                    formProveedor: ''
 
                 })
             this.getdata();
         }
 
-        // escucha a los values
-        const handleChangeProveedor = (event) => {
-            this.setState({ formProveedor: event.target.value });
-        }
-        const handleChangeCantidad = (event) => {
-            this.setState({ formCantidad: event.target.value });
-        }
-
-        const handleOpenModalDeleteDetalle = (item) => {
-            this.setState({ modalDeletedetalle: true })
-            //Modal.setAppElement('body');
-            this.setState({
-                formCodigoDetalle: item.ped_det_cod,
-                formCodigo: item.pedido_cod_pedido
-            })
-        }
 
         const handleOpenModalDelete = (item) => {
             this.setState({ modalDelete: true })
@@ -241,7 +239,7 @@ class Orden_Compras extends Component {
                     <Modal visible={modal} onClickBackdrop={handleCloseModal} dialogClassName='modal-dialog modal-lg'>
 
                         <div className="modal-header ">
-                            {this.state.edit ? <h1>Editar ordenes De Compras</h1> : <h1>Nuevo Ordenes de Compras</h1>}
+                            {this.state.edit ? <h1>Ver  ordenes De Compras</h1> : <h1>Nuevo Ordenes de Compras</h1>}
                         </div>
                         <div className="modal-body">
                             {/* {this.state.formCodigo} */}
@@ -249,16 +247,24 @@ class Orden_Compras extends Component {
                             <form className='container'>
 
                                 <div className='form-group'>
-                                    <div>
-                                        <label>Buscar Pedidos de Compras *</label>
-                                        <Select
-                                            value={selectedOption}
-                                            onChange={handleChangeOption}
-                                            options={data}
-                                            isSearchable
-                                            placeholder='Busqueda de Pedidos'
-                                        />
-                                    </div>
+
+
+                                    {
+                                        this.state.edit ?
+                                            <input type='text' className='form-control' value={this.state.datos_proveedor} disabled={true} ></input>
+                                            :
+                                            <div>
+                                                <label>Buscar Pedidos de Compras *</label>
+                                                <Select
+                                                    value={selectedOption}
+                                                    onChange={handleChangeOption}
+                                                    options={data}
+                                                    isSearchable
+                                                    placeholder='Busqueda de Pedidos'
+                                                />
+                                            </div>
+                                    }
+
                                     <span className='validacion'>{this.state.validacion}</span>
                                 </div>
                                 <div>
@@ -287,17 +293,18 @@ class Orden_Compras extends Component {
                                         </thead>
                                         <tbody>
                                             {this.state.lista.map(item => (
-                                                    
+
                                                 <tr key={item.ped_det_cod}>
                                                     <td>{item.ped_det_cod}</td>
                                                     <td>{item.merca_descr}</td>
                                                     <td>{item.cantidad}</td>
                                                     <td>{item.precioc}</td>
                                                     <td>{item.precioc * item.cantidad}</td>
-                                                    </tr>
+                                                </tr>
                                             ))}
                                         </tbody>
                                     </table>
+                                    <p className='ml-5 pl-5 total'> Total : {this.state.total}</p>
                                 </div>
 
                             </form>
@@ -355,6 +362,7 @@ class Orden_Compras extends Component {
     renderList() {
         const { data, current_page, per_page, total, to, from } = this.state.ordenes_c;
         const { color } = this.state;
+        const { selectedOption } = this.state;
 
 
         // busca la funcion de busqueda
@@ -374,22 +382,44 @@ class Orden_Compras extends Component {
             )
         });
 
-        const editordenes_c = (ordenes_c) => {
-            //console.log(ordenes_c);
+        const editordenes = (ordenes) => {
+            console.log(ordenes);
             const formData = new FormData()
             this.setState({
+                //selectedOption: ordenes.datos_pedidos,
                 modal: true,
                 edit: true,
-                formCodigo: ordenes_c.cod_pedido,
-                formProveedor: ordenes_c.proveedor_cod_prov
+                formCodigo: ordenes.cod_pedido,
+                formProveedor: ordenes.prov_descr,
+                datos_proveedor: ordenes.datos_proveedores,
+                selectedOption: ordenes.datos_pedidos
+
             })
-            formData.append('cod_pedido_pedido', ordenes_c.cod_pedido);
-            axios.post('/ordenes_c/get_detalle', formData).then(response => {
-                this.setState({ lista: response.data });
-                //console.log(this.state.lista);
+
+            formData.append('cod_pedido_pedido', ordenes.cod_pedido);
+            axios.post('/pedidos/get_detalle', formData).then(response => {
+                //console.log(response.data);
+                var total = 0;
+                response.data.map((item) => {
+                    total = total + (item.precioc * item.cantidad);
+                })
+                this.setState({ total: total });
+                // console.log(total);
+                this.setState({
+                    lista: response.data
+                });
+                //console.log(this.state.selectedOption);
             }).catch(error => {
                 alert("Error " + error);
             })
+
+            // this.state.lista.map((item) => {
+            //     let totales = 0;
+            //     totales = totales + (item.precioc * item.cantidad);
+            //     this.setState({total:totales});
+            //     //return true
+            // })
+            // console.log(this.state.total);
 
         }
 
@@ -433,7 +463,7 @@ class Orden_Compras extends Component {
                                     <td>{ordenes.fechaorden}</td>
                                     <td ><span style={{ backgroundColor: ordenes.color, color: 'white' }}>{ordenes.estado_orden}</span></td>
                                     <td>
-                                        <button className='btn btn-info' onClick={() => editordenes_c(ordenes_c, this.setState({ edit: true }))}><i className="fa fa-pencil-square-o" aria-hidden="true"></i></button>
+                                        <button className='btn btn-info' onClick={() => editordenes(ordenes, this.setState({ edit: true }))}><i className="fa fa-eye" aria-hidden="true"></i></button>
                                         <button className='btn btn-danger' onClick={() => handleOpenModalDelete(ordenes_c)}><i className="fa fa-trash" aria-hidden="true"></i></button>
                                     </td>
 

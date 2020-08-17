@@ -9,6 +9,8 @@ class Pedidos extends Component {
 
     constructor(props) {
         super(props);
+
+        console.log(props);
         this.state = {
             dias: '',
             pedidos: null,
@@ -31,10 +33,12 @@ class Pedidos extends Component {
             mercad: [],
             additem: '',
             productoagregado: [],
-            formCodigoDetalle: ''
+            formCodigoDetalle: '',
+            count: 0
         };
 
     }
+    
 
     //carga  los datos al renderizar el componente
     async componentDidMount() {
@@ -43,6 +47,13 @@ class Pedidos extends Component {
         await this.getdataMercaderia();
 
     }
+
+    // shouldComponentUpdate(nextProps, nextState){
+    //     return this.props.name !== nextProps.name ||
+    //       this.state.count !== nextState.count;
+    //   }
+
+   
 
     //obtenemos los datos de uri
     async getdata(pageNumber = 1) {

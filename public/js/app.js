@@ -82414,6 +82414,7 @@ var Menu = /*#__PURE__*/function (_Component) {
       modulos: '',
       estado: false
     };
+    console.log(window.location);
     return _this;
   } //carga  los datos al renderizar el componente
 
@@ -82481,12 +82482,77 @@ var Menu = /*#__PURE__*/function (_Component) {
     }() //obtenemos el medico
 
   }, {
+    key: "getdataPedidos",
+    value: function () {
+      var _getdataPedidos = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
+        var _this3 = this;
+
+        var pageNumber,
+            url,
+            _args3 = arguments;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                pageNumber = _args3.length > 0 && _args3[0] !== undefined ? _args3[0] : 1;
+                url = "/pedidos?page=".concat(pageNumber);
+                axios__WEBPACK_IMPORTED_MODULE_15___default.a.get(url).then(function (response) {
+                  _this3.setState({
+                    pedidos: response.data
+                  }); //console.log(response.data)
+
+                })["catch"](function (error) {
+                  alert("Error " + error);
+                });
+
+              case 3:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3);
+      }));
+
+      function getdataPedidos() {
+        return _getdataPedidos.apply(this, arguments);
+      }
+
+      return getdataPedidos;
+    }()
+  }, {
     key: "render",
     value: function render() {
+      var _this4 = this;
+
       var modulos = this.state.modulos;
+
+      var handleSelect = function handleSelect(eventKey) {
+        console.log("".concat(eventKey));
+
+        switch ("".concat(eventKey)) {
+          case '#Pedidos':
+            _this4.setState({
+              estado: true
+            });
+
+            break;
+
+          case '#Orden_Compras':
+            _this4.setState({
+              estado: true
+            });
+
+            break;
+
+          default:
+            break;
+        }
+      };
+
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_1___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react_bootstrap_Tab__WEBPACK_IMPORTED_MODULE_7__["default"].Container, {
         id: "list-group-tabs-example",
-        defaultActiveKey: "#Bienvenido"
+        defaultActiveKey: "#Bienvenido",
+        onSelect: handleSelect
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react_bootstrap_Row__WEBPACK_IMPORTED_MODULE_11__["default"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react_bootstrap_Col__WEBPACK_IMPORTED_MODULE_12__["default"], {
         sm: 2
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
@@ -82503,10 +82569,12 @@ var Menu = /*#__PURE__*/function (_Component) {
         eventKey: "#Productos"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_Productos__WEBPACK_IMPORTED_MODULE_17__["default"], null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react_bootstrap_Tab__WEBPACK_IMPORTED_MODULE_7__["default"].Pane, {
         eventKey: "#Orden_Compras"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_compras_Orden_Compras__WEBPACK_IMPORTED_MODULE_18__["default"], null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react_bootstrap_Tab__WEBPACK_IMPORTED_MODULE_7__["default"].Pane, {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_compras_Orden_Compras__WEBPACK_IMPORTED_MODULE_18__["default"], {
+        actualizar: this.state.estado
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react_bootstrap_Tab__WEBPACK_IMPORTED_MODULE_7__["default"].Pane, {
         eventKey: "#Pedidos"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_compras_Pedidos__WEBPACK_IMPORTED_MODULE_16__["default"], {
-        estado: this.state.estado
+        actualizar: this.state.estado
       }))))))));
     }
   }, {
@@ -84203,7 +84271,16 @@ var Orden_Compras = /*#__PURE__*/function (_Component) {
       }
 
       return componentDidMount;
-    }() //obtenemos los datos de uri
+    }()
+  }, {
+    key: "componentDidUpdate",
+    value: function componentDidUpdate(prevProps, prevState, nextState) {
+      // se recibe por props para actualizar si el estado es diferenete al prevProps
+      if (this.props.actualizar != prevProps.actualizar) {
+        this.getdata();
+        this.getdatapedidos();
+      }
+    } //obtenemos los datos de uri
 
   }, {
     key: "getdata",
@@ -84421,6 +84498,8 @@ var Orden_Compras = /*#__PURE__*/function (_Component) {
         _this6.setState({
           modal: true
         });
+
+        _this6.getdatapedidos();
       }; //cierra el modal
 
 
@@ -84803,8 +84882,8 @@ var Pedidos = /*#__PURE__*/function (_Component) {
 
     _classCallCheck(this, Pedidos);
 
-    _this = _super.call(this, props);
-    console.log(props);
+    _this = _super.call(this, props); //console.log(props);
+
     _this.state = {
       dias: '',
       pedidos: null,
@@ -84866,11 +84945,16 @@ var Pedidos = /*#__PURE__*/function (_Component) {
       }
 
       return componentDidMount;
-    }() // shouldComponentUpdate(nextProps, nextState){
-    //     return this.props.name !== nextProps.name ||
-    //       this.state.count !== nextState.count;
-    //   }
-    //obtenemos los datos de uri
+    }()
+  }, {
+    key: "componentDidUpdate",
+    value: function componentDidUpdate(prevProps, prevState, snapshot) {
+      // se recibe por props para actualizar si el estado es diferenete al prevProps
+      //console.log(prevProps);
+      if (this.props.actualizar != prevProps.actualizar) {
+        this.getdata();
+      }
+    } //obtenemos los datos de uri
 
   }, {
     key: "getdata",
@@ -85180,6 +85264,8 @@ var Pedidos = /*#__PURE__*/function (_Component) {
         _this8.setState({
           modal: true
         });
+
+        console.log(_this8.props);
       }; //cierra el modal
 
 
@@ -85528,8 +85614,8 @@ var Pedidos = /*#__PURE__*/function (_Component) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\Sergio0o\Desktop\Proyecto\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\Sergio0o\Desktop\Proyecto\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\Users\Sergio Amarilla\Desktop\Proyecto\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\Sergio Amarilla\Desktop\Proyecto\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

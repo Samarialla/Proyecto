@@ -10,7 +10,7 @@ class Pedidos extends Component {
     constructor(props) {
         super(props);
 
-        console.log(props);
+        //console.log(props);
         this.state = {
             dias: '',
             pedidos: null,
@@ -48,10 +48,13 @@ class Pedidos extends Component {
 
     }
 
-    // shouldComponentUpdate(nextProps, nextState){
-    //     return this.props.name !== nextProps.name ||
-    //       this.state.count !== nextState.count;
-    //   }
+    componentDidUpdate(prevProps, prevState, snapshot){
+       // se recibe por props para actualizar si el estado es diferenete al prevProps
+       //console.log(prevProps);
+        if (this.props.actualizar != prevProps.actualizar) {
+            this.getdata();
+          }
+      }
 
    
 
@@ -242,6 +245,7 @@ class Pedidos extends Component {
         const handleOpenModal = (event) => {
             event.preventDefault();
             this.setState({ modal: true });
+            console.log(this.props)
 
         }
 

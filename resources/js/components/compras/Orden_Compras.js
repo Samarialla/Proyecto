@@ -46,6 +46,14 @@ class Orden_Compras extends Component {
 
     }
 
+    componentDidUpdate(prevProps, prevState, nextState){
+        // se recibe por props para actualizar si el estado es diferenete al prevProps
+            if (this.props.actualizar != prevProps.actualizar) {
+             this.getdata();
+             this.getdatapedidos();
+           }
+       }
+
     //obtenemos los datos de uri
     async getdata(pageNumber = 1) {
         const url = `/ordenes?page=${pageNumber}`;
@@ -180,6 +188,7 @@ class Orden_Compras extends Component {
         const handleOpenModal = (event) => {
             event.preventDefault();
             this.setState({ modal: true });
+            this.getdatapedidos();
 
         }
 

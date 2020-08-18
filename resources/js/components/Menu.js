@@ -34,15 +34,19 @@ class Menu extends Component {
             estado: false
 
         }
-
+        console.log(window.location);
     }
+
 
     //carga  los datos al renderizar el componente
     async componentDidMount() {
         await this.getModulo();
+        
+        
 
         //await this.cargarRadioDias();
     }
+   
 
     //obtenemos los datos de uri
     async getModulo() {
@@ -50,20 +54,50 @@ class Menu extends Component {
         Axios.get(url).then(response => {
             this.setState({ modulos: response.data })
             //console.log(this.state.modulos)
- 
+
         }).catch(error => {
             alert("Error " + error)
         })
     }
     //obtenemos el medico
 
+    async getdataPedidos(pageNumber = 1) {
+        const url = `/pedidos?page=${pageNumber}`;
+        Axios.get(url).then(response => {
+            this.setState({ pedidos: response.data })
+            //console.log(response.data)
+
+        }).catch(error => {
+            alert("Error " + error)
+        })
+    }
+
     render() {
         const { modulos } = this.state;
 
+        const handleSelect = (eventKey) => {
+            console.log(`${eventKey}`);
+
+            switch (`${eventKey}`) {
+                case '#Pedidos':
+                    this.setState({ estado: true })
+                    break;
+                    case '#Orden_Compras':
+                        this.setState({ estado: true })
+                        break;
+                default:
+                    break;
+            }
+        }
+
         return (
+
+
+
             <>
 
-                <Tab.Container id="list-group-tabs-example" defaultActiveKey="#Bienvenido">
+
+                <Tab.Container id="list-group-tabs-example" defaultActiveKey="#Bienvenido" onSelect={handleSelect}>
                     <Row>
                         <Col sm={2}>
                             <div className='dashboard'>
@@ -82,16 +116,16 @@ class Menu extends Component {
                                         <Clientes />
                                     </Tab.Pane>
                                     <Tab.Pane eventKey="#Productos">
-                                        <Productos/>
+                                        <Productos />
                                     </Tab.Pane>
                                     <Tab.Pane eventKey="#Orden_Compras">
-                                        <Orden_Compras />
+                                        <Orden_Compras actualizar ={this.state.estado} />
                                     </Tab.Pane>
                                     <Tab.Pane eventKey="#Pedidos">
-                                        <Pedidos estado = {this.state.estado} />
+                                        <Pedidos actualizar ={this.state.estado}/>
                                     </Tab.Pane>
-                                   
-                                    
+
+
                                 </Tab.Content>
                             </div>
                         </Col>
@@ -128,7 +162,7 @@ class Menu extends Component {
                 {data.map((mod, index) => {
                     console.log(data);
                     return (
-                        
+
                         <Tab.Pane key={index} eventKey={mod.modulo_event_key}>
                             {mod.modulo_descripcion}
                         </Tab.Pane>
@@ -141,8 +175,8 @@ class Menu extends Component {
 
     }
 }
-    export default Menu;
-    if(document.getElementById('root')) {
+export default Menu;
+if (document.getElementById('root')) {
     ReactDOM.render(<Menu />, document.getElementById('root'));
 }
 

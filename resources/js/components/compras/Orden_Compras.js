@@ -50,7 +50,7 @@ class Orden_Compras extends Component {
         // se recibe por props para actualizar si el estado es diferenete al prevProps
             if (this.props.actualizar != prevProps.actualizar) {
              this.getdata();
-             this.getdatapedidos();
+             //this.getdatapedidos();
            }
        }
 
@@ -88,23 +88,18 @@ class Orden_Compras extends Component {
         }
     }
 
-    enviarDeleteordenes_c_detalle(event) {
+    enviarUpdateOrden(event) {
         event.preventDefault();
         const formData = new FormData()
-        formData.append('ped_det_cod', this.state.formCodigoDetalle);
-        formData.append('cod_pedido_pedido', this.state.formCodigo)
+        formData.append('orden_cod', this.state.formCodigo);
+        formData.append('pedido_cod_pedido', this.state.pedidos)
 
-        if (this.state.formCodigoDetalle != '') {
-            axios.post('/ordenes_c/delete_detalle', formData).then(response => {
+        if (this.state.formCodigo != '' && this.state.pedidos != '') {
+            axios.post('/ordenes/update', formData).then(response => {
                 if (response.data.success == true) {
-                    this.setState({ modalDeletedetalle: false })
-                    axios.post('/ordenes_c/get_detalle', formData).then(response => {
-                        this.setState({ lista: response.data });
-                        console.log(this.state.lista);
-                    }).catch(error => {
-                        alert("Error " + error);
-                    })
-
+                    this.setState({ modalDelete: false })
+                    this.getdata();
+                   
                 }
             }).catch(error => {
                 console.log("Error " + error);
@@ -216,14 +211,14 @@ class Orden_Compras extends Component {
         }
 
 
-        const handleOpenModalDelete = (item) => {
-            this.setState({ modalDelete: true })
-            //Modal.setAppElement('body');
-            this.setState({
-                formCodigoDetalle: item.ped_det_cod,
-                formCodigo: item.pedido_cod_pedido
-            })
-        }
+        // const handleOpenModalDelete = (item) => {
+        //     this.setState({ modalDelete: true })
+        //     //Modal.setAppElement('body');
+        //     this.setState({
+        //         formCodigoDetalle: item.ped_det_cod,
+        //         formCodigo: item.pedido_cod_pedido
+        //     })
+        // }
 
         return (
 
@@ -337,29 +332,14 @@ class Orden_Compras extends Component {
                 <Modal visible={modalDelete} onClickBackdrop={handleCloseModal} className="">
                     <div className='container'>
                         <div className='modal-header'>
-                            <h3>Actualizar ordenes_c</h3>
+                            <h3>Actualizar ordenes de Compras</h3>
                         </div>
                         <div className='modal-body'>
                             <h3>¿Desea actualizar este este?</h3>
                         </div>
                         <div className='modal-footer'>
                             <button type="button" className="btn btn-secondary " data-dismiss="modal" onClick={handleCloseModal}>Cancelar</button>
-                            <button className='btn btn-danger' onClick={(event) => this.enviarDeleteordenes_c(event)}>Eliminar</button>
-                        </div>
-                    </div>
-                </Modal>
-
-                <Modal visible={modalDeletedetalle} onClickBackdrop={handleCloseModal} className="">
-                    <div className='container'>
-                        <div className='modal-header'>
-                            <h3>Eliminar Productos de la Grill</h3>
-                        </div>
-                        <div className='modal-body'>
-                            <h3>¿Desea eliminar este Productos?</h3>
-                        </div>
-                        <div className='modal-footer'>
-                            <button type="button" className="btn btn-secondary " data-dismiss="modal" onClick={handleCloseModal}>Cancelar</button>
-                            <button className='btn btn-danger' onClick={(event) => this.enviarDeleteordenes_c_detalle(event)}>Eliminar</button>
+                            <button className='btn btn-danger' onClick={(event) => this.enviarUpdateOrden(event)}>Eliminar</button>
                         </div>
                     </div>
                 </Modal>
@@ -433,12 +413,12 @@ class Orden_Compras extends Component {
         }
 
 
-        const handleOpenModalDelete = (ordenes_c) => {
+        const handleOpenModalDelete = (ordenes) => {
             this.setState({ modalDelete: true })
             //Modal.setAppElement('body');
             this.setState({
-                formCodigo: ordenes_c.cod_pedido,
-                formProveedor: ordenes_c.prov_descr
+                formCodigo: ordenes.orden_cod,
+                pedidos: ordenes.cod_pedido
             })
 
         }
@@ -473,7 +453,7 @@ class Orden_Compras extends Component {
                                     <td ><span style={{ backgroundColor: ordenes.color, color: 'white' }}>{ordenes.estado_orden}</span></td>
                                     <td>
                                         <button className='btn btn-info' onClick={() => editordenes(ordenes, this.setState({ edit: true }))}><i className="fa fa-eye" aria-hidden="true"></i></button>
-                                        <button className='btn btn-danger' onClick={() => handleOpenModalDelete(ordenes_c)}><i className="fa fa-trash" aria-hidden="true"></i></button>
+                                        <button className='btn btn-danger' onClick={() => handleOpenModalDelete(ordenes)}><i className="fa fa-pencil-square-o" aria-hidden="true"></i></button>
                                     </td>
 
                                 </tr>

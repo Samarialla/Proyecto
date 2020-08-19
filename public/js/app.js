@@ -82413,8 +82413,8 @@ var Menu = /*#__PURE__*/function (_Component) {
     _this.state = {
       modulos: '',
       estado: false
-    };
-    console.log(window.location);
+    }; // console.log(window.location);
+
     return _this;
   } //carga  los datos al renderizar el componente
 
@@ -82539,7 +82539,7 @@ var Menu = /*#__PURE__*/function (_Component) {
 
           case '#Orden_Compras':
             _this4.setState({
-              estado: true
+              estado: false
             });
 
             break;
@@ -82549,33 +82549,42 @@ var Menu = /*#__PURE__*/function (_Component) {
         }
       };
 
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_1___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react_bootstrap_Tab__WEBPACK_IMPORTED_MODULE_7__["default"].Container, {
-        id: "list-group-tabs-example",
-        defaultActiveKey: "#Bienvenido",
-        onSelect: handleSelect
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react_bootstrap_Row__WEBPACK_IMPORTED_MODULE_11__["default"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react_bootstrap_Col__WEBPACK_IMPORTED_MODULE_12__["default"], {
-        sm: 2
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
-        className: "dashboard"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react_bootstrap_ListGroup__WEBPACK_IMPORTED_MODULE_5__["default"], null, modulos && this.renderModulos()))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react_bootstrap_Col__WEBPACK_IMPORTED_MODULE_12__["default"], {
-        sm: 10
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
-        className: "principal"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react_bootstrap_Tab__WEBPACK_IMPORTED_MODULE_7__["default"].Content, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react_bootstrap_Tab__WEBPACK_IMPORTED_MODULE_7__["default"].Pane, {
-        eventKey: "#Bienvenido"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_Bienvenido__WEBPACK_IMPORTED_MODULE_13__["default"], null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react_bootstrap_Tab__WEBPACK_IMPORTED_MODULE_7__["default"].Pane, {
-        eventKey: "#Clientes"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_Clientes__WEBPACK_IMPORTED_MODULE_3__["default"], null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react_bootstrap_Tab__WEBPACK_IMPORTED_MODULE_7__["default"].Pane, {
-        eventKey: "#Productos"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_Productos__WEBPACK_IMPORTED_MODULE_17__["default"], null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react_bootstrap_Tab__WEBPACK_IMPORTED_MODULE_7__["default"].Pane, {
-        eventKey: "#Orden_Compras"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_compras_Orden_Compras__WEBPACK_IMPORTED_MODULE_18__["default"], {
-        actualizar: this.state.estado
-      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react_bootstrap_Tab__WEBPACK_IMPORTED_MODULE_7__["default"].Pane, {
-        eventKey: "#Pedidos"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_compras_Pedidos__WEBPACK_IMPORTED_MODULE_16__["default"], {
-        actualizar: this.state.estado
-      }))))))));
+      return (
+        /*#__PURE__*/
+
+        /**
+         * 
+         * se podria crear un estado para cada componente y enviar por props para poder comparar en componentDidUpdate
+         *  de cada componte con su nuevo estado y variable
+         */
+        react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_1___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react_bootstrap_Tab__WEBPACK_IMPORTED_MODULE_7__["default"].Container, {
+          id: "list-group-tabs-example",
+          defaultActiveKey: "#Bienvenido",
+          onSelect: handleSelect
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react_bootstrap_Row__WEBPACK_IMPORTED_MODULE_11__["default"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react_bootstrap_Col__WEBPACK_IMPORTED_MODULE_12__["default"], {
+          sm: 2
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+          className: "dashboard"
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react_bootstrap_ListGroup__WEBPACK_IMPORTED_MODULE_5__["default"], null, modulos && this.renderModulos()))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react_bootstrap_Col__WEBPACK_IMPORTED_MODULE_12__["default"], {
+          sm: 10
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+          className: "principal"
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react_bootstrap_Tab__WEBPACK_IMPORTED_MODULE_7__["default"].Content, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react_bootstrap_Tab__WEBPACK_IMPORTED_MODULE_7__["default"].Pane, {
+          eventKey: "#Bienvenido"
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_Bienvenido__WEBPACK_IMPORTED_MODULE_13__["default"], null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react_bootstrap_Tab__WEBPACK_IMPORTED_MODULE_7__["default"].Pane, {
+          eventKey: "#Clientes"
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_Clientes__WEBPACK_IMPORTED_MODULE_3__["default"], null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react_bootstrap_Tab__WEBPACK_IMPORTED_MODULE_7__["default"].Pane, {
+          eventKey: "#Productos"
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_Productos__WEBPACK_IMPORTED_MODULE_17__["default"], null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react_bootstrap_Tab__WEBPACK_IMPORTED_MODULE_7__["default"].Pane, {
+          eventKey: "#Orden_Compras"
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_compras_Orden_Compras__WEBPACK_IMPORTED_MODULE_18__["default"], {
+          actualizar: this.state.estado
+        })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react_bootstrap_Tab__WEBPACK_IMPORTED_MODULE_7__["default"].Pane, {
+          eventKey: "#Pedidos"
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_compras_Pedidos__WEBPACK_IMPORTED_MODULE_16__["default"], {
+          actualizar: this.state.estado
+        }))))))))
+      );
     }
   }, {
     key: "renderModulos",
@@ -84277,8 +84286,7 @@ var Orden_Compras = /*#__PURE__*/function (_Component) {
     value: function componentDidUpdate(prevProps, prevState, nextState) {
       // se recibe por props para actualizar si el estado es diferenete al prevProps
       if (this.props.actualizar != prevProps.actualizar) {
-        this.getdata();
-        this.getdatapedidos();
+        this.getdata(); //this.getdatapedidos();
       }
     } //obtenemos los datos de uri
 
@@ -84349,31 +84357,23 @@ var Orden_Compras = /*#__PURE__*/function (_Component) {
       }
     }
   }, {
-    key: "enviarDeleteordenes_c_detalle",
-    value: function enviarDeleteordenes_c_detalle(event) {
+    key: "enviarUpdateOrden",
+    value: function enviarUpdateOrden(event) {
       var _this4 = this;
 
       event.preventDefault();
       var formData = new FormData();
-      formData.append('ped_det_cod', this.state.formCodigoDetalle);
-      formData.append('cod_pedido_pedido', this.state.formCodigo);
+      formData.append('orden_cod', this.state.formCodigo);
+      formData.append('pedido_cod_pedido', this.state.pedidos);
 
-      if (this.state.formCodigoDetalle != '') {
-        axios.post('/ordenes_c/delete_detalle', formData).then(function (response) {
+      if (this.state.formCodigo != '' && this.state.pedidos != '') {
+        axios.post('/ordenes/update', formData).then(function (response) {
           if (response.data.success == true) {
             _this4.setState({
-              modalDeletedetalle: false
+              modalDelete: false
             });
 
-            axios.post('/ordenes_c/get_detalle', formData).then(function (response) {
-              _this4.setState({
-                lista: response.data
-              });
-
-              console.log(_this4.state.lista);
-            })["catch"](function (error) {
-              alert("Error " + error);
-            });
+            _this4.getdata();
           }
         })["catch"](function (error) {
           console.log("Error " + error);
@@ -84522,19 +84522,15 @@ var Orden_Compras = /*#__PURE__*/function (_Component) {
         });
 
         _this6.getdata();
-      };
+      }; // const handleOpenModalDelete = (item) => {
+      //     this.setState({ modalDelete: true })
+      //     //Modal.setAppElement('body');
+      //     this.setState({
+      //         formCodigoDetalle: item.ped_det_cod,
+      //         formCodigo: item.pedido_cod_pedido
+      //     })
+      // }
 
-      var handleOpenModalDelete = function handleOpenModalDelete(item) {
-        _this6.setState({
-          modalDelete: true
-        }); //Modal.setAppElement('body');
-
-
-        _this6.setState({
-          formCodigoDetalle: item.ped_det_cod,
-          formCodigo: item.pedido_cod_pedido
-        });
-      };
 
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_1___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
         className: "container"
@@ -84637,7 +84633,7 @@ var Orden_Compras = /*#__PURE__*/function (_Component) {
         className: "container"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
         className: "modal-header"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("h3", null, "Actualizar ordenes_c")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("h3", null, "Actualizar ordenes de Compras")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
         className: "modal-body"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("h3", null, "\xBFDesea actualizar este este?")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
         className: "modal-footer"
@@ -84649,29 +84645,7 @@ var Orden_Compras = /*#__PURE__*/function (_Component) {
       }, "Cancelar"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("button", {
         className: "btn btn-danger",
         onClick: function onClick(event) {
-          return _this6.enviarDeleteordenes_c(event);
-        }
-      }, "Eliminar")))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react_bootstrap4_modal__WEBPACK_IMPORTED_MODULE_4___default.a, {
-        visible: modalDeletedetalle,
-        onClickBackdrop: handleCloseModal,
-        className: ""
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
-        className: "container"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
-        className: "modal-header"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("h3", null, "Eliminar Productos de la Grill")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
-        className: "modal-body"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("h3", null, "\xBFDesea eliminar este Productos?")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
-        className: "modal-footer"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("button", {
-        type: "button",
-        className: "btn btn-secondary ",
-        "data-dismiss": "modal",
-        onClick: handleCloseModal
-      }, "Cancelar"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("button", {
-        className: "btn btn-danger",
-        onClick: function onClick(event) {
-          return _this6.enviarDeleteordenes_c_detalle(event);
+          return _this6.enviarUpdateOrden(event);
         }
       }, "Eliminar")))));
     }
@@ -84742,15 +84716,15 @@ var Orden_Compras = /*#__PURE__*/function (_Component) {
         // console.log(this.state.total);
       };
 
-      var handleOpenModalDelete = function handleOpenModalDelete(ordenes_c) {
+      var handleOpenModalDelete = function handleOpenModalDelete(ordenes) {
         _this7.setState({
           modalDelete: true
         }); //Modal.setAppElement('body');
 
 
         _this7.setState({
-          formCodigo: ordenes_c.cod_pedido,
-          formProveedor: ordenes_c.prov_descr
+          formCodigo: ordenes.orden_cod,
+          pedidos: ordenes.cod_pedido
         });
       };
 
@@ -84781,10 +84755,10 @@ var Orden_Compras = /*#__PURE__*/function (_Component) {
         })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("button", {
           className: "btn btn-danger",
           onClick: function onClick() {
-            return handleOpenModalDelete(ordenes_c);
+            return handleOpenModalDelete(ordenes);
           }
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("i", {
-          className: "fa fa-trash",
+          className: "fa fa-pencil-square-o",
           "aria-hidden": "true"
         }))));
       }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
@@ -84907,7 +84881,8 @@ var Pedidos = /*#__PURE__*/function (_Component) {
       additem: '',
       productoagregado: [],
       formCodigoDetalle: '',
-      count: 0
+      count: 0,
+      estado: false
     };
     return _this;
   } //carga  los datos al renderizar el componente
@@ -84951,7 +84926,7 @@ var Pedidos = /*#__PURE__*/function (_Component) {
     value: function componentDidUpdate(prevProps, prevState, snapshot) {
       // se recibe por props para actualizar si el estado es diferenete al prevProps
       //console.log(prevProps);
-      if (this.props.actualizar != prevProps.actualizar) {
+      if (this.props.actualizar !== prevProps.actualizar) {
         this.getdata();
       }
     } //obtenemos los datos de uri

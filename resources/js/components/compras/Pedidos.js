@@ -34,11 +34,12 @@ class Pedidos extends Component {
             additem: '',
             productoagregado: [],
             formCodigoDetalle: '',
-            count: 0
+            count: 0,
+            estado: false
         };
 
     }
-    
+
 
     //carga  los datos al renderizar el componente
     async componentDidMount() {
@@ -48,15 +49,15 @@ class Pedidos extends Component {
 
     }
 
-    componentDidUpdate(prevProps, prevState, snapshot){
-       // se recibe por props para actualizar si el estado es diferenete al prevProps
-       //console.log(prevProps);
-        if (this.props.actualizar != prevProps.actualizar) {
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        // se recibe por props para actualizar si el estado es diferenete al prevProps
+        //console.log(prevProps);
+        if (this.props.actualizar !== prevProps.actualizar) {
             this.getdata();
-          }
-      }
+        }
+    }
 
-   
+
 
     //obtenemos los datos de uri
     async getdata(pageNumber = 1) {

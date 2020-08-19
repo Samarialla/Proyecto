@@ -47,15 +47,15 @@ class Orden_ComprasController extends Controller
             'estado_orden' => 'ACTIVO',
             'pedido_cod_pedido' => $cod_pedido,
             'users_id' => $id,
-            'datos_pedidos'=>$request->input('datos_pedidos')
-         ]);
+            'datos_pedidos' => $request->input('datos_pedidos')
+        ]);
 
-         $pedido = DB::table('pedido')->where('cod_pedido', $cod_pedido)->update([
+        $pedido = DB::table('pedido')->where('cod_pedido', $cod_pedido)->update([
             'ped_estado' => 'PROCESADO',
-           
-         ]);
 
-        if ($orden != null && $pedido !=null)   {
+        ]);
+
+        if ($orden != null && $pedido != null) {
             $response['message'] = "Actualizo exitosamente";
             $response['success'] = true;
             //$response['insertid'] = $codigo;
@@ -63,6 +63,31 @@ class Orden_ComprasController extends Controller
             $response['message'] = "No se Actualizo";
             $response['success'] = false;
         }
+
+        return $response;
+    }
+
+    public function update(Request $request)
+    {
+        $cod_pedido = $request->input('pedido_cod_pedido');
+        $orden =    DB::table('orden_compras')->where('orden_cod', $request->input('orden_cod'))->update([
+            'estado_orden' => 'ANULADO',
+        ]);
+        $pedido = DB::table('pedido')->where('cod_pedido', $cod_pedido)->update([
+            'ped_estado' => 'ACTIVO',
+
+        ]);
+
+        if ($orden != '' && $pedido != '') {
+            $response['message'] = "Actualizo exitosamente";
+            $response['success'] = true;
+        } else {
+            $response['message'] = "No se Actualizo";
+            $response['success'] = false;
+            // var_dump($mercaderia);
+        }
+        // respesta de JSON
+
 
         return $response;
     }

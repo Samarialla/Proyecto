@@ -34,19 +34,19 @@ class Menu extends Component {
             estado: false
 
         }
-        console.log(window.location);
+        // console.log(window.location);
     }
 
 
     //carga  los datos al renderizar el componente
     async componentDidMount() {
         await this.getModulo();
-        
-        
+
+
 
         //await this.cargarRadioDias();
     }
-   
+
 
     //obtenemos los datos de uri
     async getModulo() {
@@ -82,9 +82,9 @@ class Menu extends Component {
                 case '#Pedidos':
                     this.setState({ estado: true })
                     break;
-                    case '#Orden_Compras':
-                        this.setState({ estado: true })
-                        break;
+                case '#Orden_Compras':
+                    this.setState({ estado: false })
+                    break;
                 default:
                     break;
             }
@@ -92,7 +92,11 @@ class Menu extends Component {
 
         return (
 
-
+            /**
+             * 
+             * se podria crear un estado para cada componente y enviar por props para poder comparar en componentDidUpdate
+             *  de cada componte con su nuevo estado y variable
+             */
 
             <>
 
@@ -119,10 +123,10 @@ class Menu extends Component {
                                         <Productos />
                                     </Tab.Pane>
                                     <Tab.Pane eventKey="#Orden_Compras">
-                                        <Orden_Compras actualizar ={this.state.estado} />
+                                        <Orden_Compras actualizar={this.state.estado} />
                                     </Tab.Pane>
                                     <Tab.Pane eventKey="#Pedidos">
-                                        <Pedidos actualizar ={this.state.estado}/>
+                                        <Pedidos actualizar={this.state.estado} />
                                     </Tab.Pane>
 
 

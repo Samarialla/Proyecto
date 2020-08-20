@@ -1,11 +1,31 @@
-
-html{
-    font-size: 10px;
+html {
+    font-size: 12px;
 }
-.cabecera{
+
+.cabecera {
     width: 100%;
-    height: 100px;
+    height: 50px;
     border-style: solid;
-    border-width: 1px;
+    border-width: 2px;
     border-collapse: collapse;
+}
+ h1{
+     color: blue;
+     text-align: center;
+ }
+ 
+  b{
+     margin-left: 25px;
+ }
+
+ .padre {
+    /* IMPORTANTE */
+    text-align: center;
+  }
+  
+  .hijo {
+    /* background-color: yellow; */
+    padding: 10px;
+    margin: 5px;
+    display: inline-block;
   }

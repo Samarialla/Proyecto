@@ -5,9 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\DB;
-
 class Imprimir extends Controller
 {
     public function download(Request $request)
@@ -25,7 +23,7 @@ class Imprimir extends Controller
 
         // //$pdf->loadHTML('<p>hola</p>');
         // //$pdf->loadView('orden_compras');
-        $pdf = PDF::loadView('orden_compras', $data);
+        $pdf = PDF::loadView('orden_compras', $data) ->setPaper('a4', 'landscape');
 
         // //return $pdf->download('archivo.pdf');
         return $pdf->stream();
@@ -53,8 +51,10 @@ class Imprimir extends Controller
     public function get_pedidos_cabecera($id_orden){
       
         $pedidos= DB::table('orden_compras as o')
-        ->select('*')
+        ->select('*',DB::raw('sum(precioc * cantidad)  as total'))
         ->join('pedido as p', 'p.cod_pedido', '=', 'o.pedido_cod_pedido')
+        ->join('pedido_detalle as pd', 'pd.pedido_cod_pedido', '=', 'p.cod_pedido')
+        ->join('mercaderia as m', 'm.mercaderia_cod', '=', 'pd.mercaderia_mercaderia_cod')
         ->join('proveedor as pr', 'pr.cod_prov', '=', 'p.proveedor_cod_prov')
         ->where('o.orden_cod',$id_orden )
         //->paginate(1);

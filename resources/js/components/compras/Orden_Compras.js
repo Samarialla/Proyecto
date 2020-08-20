@@ -46,13 +46,13 @@ class Orden_Compras extends Component {
 
     }
 
-    componentDidUpdate(prevProps, prevState, nextState){
+    componentDidUpdate(prevProps, prevState, nextState) {
         // se recibe por props para actualizar si el estado es diferenete al prevProps
-            if (this.props.actualizar != prevProps.actualizar) {
-             this.getdata();
-             //this.getdatapedidos();
-           }
-       }
+        if (this.props.actualizar != prevProps.actualizar) {
+            this.getdata();
+            //this.getdatapedidos();
+        }
+    }
 
     //obtenemos los datos de uri
     async getdata(pageNumber = 1) {
@@ -99,7 +99,7 @@ class Orden_Compras extends Component {
                 if (response.data.success == true) {
                     this.setState({ modalDelete: false })
                     this.getdata();
-                   
+
                 }
             }).catch(error => {
                 console.log("Error " + error);
@@ -109,6 +109,16 @@ class Orden_Compras extends Component {
         }
     }
 
+    imprimirOrden(event) {
+        event.preventDefault();
+        const formData = new FormData()
+        formData.append('orden_cod', this.state.formCodigo);
+        if (this.state.formCodigo != '') {
+            window.open('/imprimir?orden_cod='+this.state.formCodigo)
+        } else {
+            this.setState({ validacion: 'Campo obligatorio' })
+        }
+    }
 
 
     async getdatapedidos() {
@@ -141,7 +151,6 @@ class Orden_Compras extends Component {
         const handleChangeOption = selectedOption => {
             this.setState({ selectedOption });
             const formData = new FormData();
-
             formData.append('cod_pedido_pedido', selectedOption.value);
             axios.post('/pedidos/get_detalle', formData).then(response => {
                 //console.log(response.data);
@@ -317,7 +326,10 @@ class Orden_Compras extends Component {
 
                             {
                                 this.state.edit ?
-                                    <button type="submit" className="btn btn-primary" onClick={handleCloseModal} >Actualizar</button>
+                                    <div>
+                                        {/* <button type="submit" className="btn btn-primary" onClick={handleCloseModal} >Actualizar</button> */}
+                                        <button type="submit" className="btn btn-success" target="_blank" onClick={(event) => this.imprimirOrden(event)} >Imprimir</button>
+                                    </div>
                                     :
                                     <button type="submit" className="btn btn-primary" onClick={(event) => this.enviarordenes(event)} >Guardar</button>
                             }
@@ -378,7 +390,7 @@ class Orden_Compras extends Component {
                 //selectedOption: ordenes.datos_pedidos,
                 modal: true,
                 edit: true,
-                formCodigo: ordenes.cod_pedido,
+                formCodigo: ordenes.orden_cod,
                 formProveedor: ordenes.prov_descr,
                 datos_proveedor: ordenes.datos_proveedores,
                 selectedOption: ordenes.datos_pedidos

@@ -51,6 +51,8 @@ Route::get('/mercaderia','API\DatosController@get_mercaderia')->name('mercaderia
 Route::get('/modulos','API\DatosController@modulos')->name('modulos');
 Route::get('/pedidos_compras','API\DatosController@get_pedidos_compras')->name('pedidos');
 Route::post('/pedidos_compras_proveedor','API\DatosController@get_proveedor_pedidos')->name('pedidos');
+Route::get('/imprimir','API\Imprimir@download')->name('imprimir');
+
 
 
 

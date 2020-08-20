@@ -84385,6 +84385,21 @@ var Orden_Compras = /*#__PURE__*/function (_Component) {
       }
     }
   }, {
+    key: "imprimirOrden",
+    value: function imprimirOrden(event) {
+      event.preventDefault();
+      var formData = new FormData();
+      formData.append('orden_cod', this.state.formCodigo);
+
+      if (this.state.formCodigo != '') {
+        window.open('/imprimir?orden_cod=' + this.state.formCodigo);
+      } else {
+        this.setState({
+          validacion: 'Campo obligatorio'
+        });
+      }
+    }
+  }, {
     key: "getdatapedidos",
     value: function () {
       var _getdatapedidos = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
@@ -84610,11 +84625,14 @@ var Orden_Compras = /*#__PURE__*/function (_Component) {
         className: "ml-5 pl-5 total"
       }, " Total : ", this.state.total)))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
         className: "modal-footer"
-      }, this.state.edit ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("button", {
+      }, this.state.edit ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("button", {
         type: "submit",
-        className: "btn btn-primary",
-        onClick: handleCloseModal
-      }, "Actualizar") : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("button", {
+        className: "btn btn-success",
+        target: "_blank",
+        onClick: function onClick(event) {
+          return _this6.imprimirOrden(event);
+        }
+      }, "Imprimir")) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("button", {
         type: "submit",
         className: "btn btn-primary",
         onClick: function onClick(event) {
@@ -84682,7 +84700,7 @@ var Orden_Compras = /*#__PURE__*/function (_Component) {
           //selectedOption: ordenes.datos_pedidos,
           modal: true,
           edit: true,
-          formCodigo: ordenes.cod_pedido,
+          formCodigo: ordenes.orden_cod,
           formProveedor: ordenes.prov_descr,
           datos_proveedor: ordenes.datos_proveedores,
           selectedOption: ordenes.datos_pedidos

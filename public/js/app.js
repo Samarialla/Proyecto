@@ -82343,6 +82343,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _compras_Pedidos__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./compras/Pedidos */ "./resources/js/components/compras/Pedidos.js");
 /* harmony import */ var _Productos__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./Productos */ "./resources/js/components/Productos.js");
 /* harmony import */ var _compras_Orden_Compras__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./compras/Orden_Compras */ "./resources/js/components/compras/Orden_Compras.js");
+/* harmony import */ var _compras_Compras__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./compras/Compras */ "./resources/js/components/compras/Compras.js");
 
 
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -82389,6 +82390,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 
 
 
+
 /*
 notas se pueder realizar que el nav bar y el secundarios esten esten el mismo compente asi para evitar el problema de child 
 asi manejar con estados  el render dentro del componente 
@@ -82412,7 +82414,9 @@ var Menu = /*#__PURE__*/function (_Component) {
     _this = _super.call(this, props);
     _this.state = {
       modulos: '',
-      estado: false
+      estado: false,
+      estado_orden: false,
+      estado_compras: false
     }; // console.log(window.location);
 
     return _this;
@@ -82532,14 +82536,27 @@ var Menu = /*#__PURE__*/function (_Component) {
         switch ("".concat(eventKey)) {
           case '#Pedidos':
             _this4.setState({
-              estado: true
+              estado: true,
+              estado_orden: false,
+              estado_compras: false
             });
 
             break;
 
           case '#Orden_Compras':
             _this4.setState({
-              estado: false
+              estado_orden: true,
+              estado: false,
+              estado_compras: false
+            });
+
+            break;
+
+          case '#Compras':
+            _this4.setState({
+              estado_orden: false,
+              estado: false,
+              estado_compras: true
             });
 
             break;
@@ -82578,11 +82595,15 @@ var Menu = /*#__PURE__*/function (_Component) {
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_Productos__WEBPACK_IMPORTED_MODULE_17__["default"], null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react_bootstrap_Tab__WEBPACK_IMPORTED_MODULE_7__["default"].Pane, {
           eventKey: "#Orden_Compras"
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_compras_Orden_Compras__WEBPACK_IMPORTED_MODULE_18__["default"], {
-          actualizar: this.state.estado
+          actualizar_orden: this.state.estado_orden
         })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react_bootstrap_Tab__WEBPACK_IMPORTED_MODULE_7__["default"].Pane, {
           eventKey: "#Pedidos"
         }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_compras_Pedidos__WEBPACK_IMPORTED_MODULE_16__["default"], {
           actualizar: this.state.estado
+        })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react_bootstrap_Tab__WEBPACK_IMPORTED_MODULE_7__["default"].Pane, {
+          eventKey: "#Compras"
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_compras_Compras__WEBPACK_IMPORTED_MODULE_19__["default"], {
+          actualizar_compras: this.state.estado_compras
         }))))))))
       );
     }
@@ -84154,6 +84175,659 @@ var AgendaMedica = /*#__PURE__*/function (_Component) {
 
 /***/ }),
 
+/***/ "./resources/js/components/compras/Compras.js":
+/*!****************************************************!*\
+  !*** ./resources/js/components/compras/Compras.js ***!
+  \****************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var react_js_pagination__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-js-pagination */ "./node_modules/react-js-pagination/dist/Pagination.js");
+/* harmony import */ var react_js_pagination__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(react_js_pagination__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var react_bootstrap4_modal__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-bootstrap4-modal */ "./node_modules/react-bootstrap4-modal/lib/index.js");
+/* harmony import */ var react_bootstrap4_modal__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(react_bootstrap4_modal__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var react_select__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react-select */ "./node_modules/react-select/dist/react-select.browser.esm.js");
+/* harmony import */ var react_serialize__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react-serialize */ "./node_modules/react-serialize/lib/index.js");
+/* harmony import */ var react_serialize__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(react_serialize__WEBPACK_IMPORTED_MODULE_6__);
+
+
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function () { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+
+
+
+
+
+
+
+var Compras = /*#__PURE__*/function (_Component) {
+  _inherits(Compras, _Component);
+
+  var _super = _createSuper(Compras);
+
+  function Compras(props) {
+    var _this;
+
+    _classCallCheck(this, Compras);
+
+    _this = _super.call(this, props);
+    _this.state = {
+      compras: '',
+      ordenes_c: null,
+      modal: false,
+      formCodigo: '',
+      validacion: '',
+      edit: false,
+      modalDelete: false,
+      modalDeletedetalle: false,
+      search: '',
+      color: '',
+      formProveedor: '',
+      formMercaderia: '',
+      formMercaderiaName: '',
+      selectedOption: null,
+      pedidos: '',
+      formCantidad: '',
+      list: [],
+      lista: [],
+      mercad: [],
+      additem: '',
+      productoagregado: [],
+      formCodigoPedido: '',
+      datos_proveedor: '',
+      total: 0
+    };
+    return _this;
+  } //carga  los datos al renderizar el componente
+
+
+  _createClass(Compras, [{
+    key: "componentDidMount",
+    value: function () {
+      var _componentDidMount = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _context.next = 2;
+                return this.getdata();
+
+              case 2:
+                _context.next = 4;
+                return this.getdatapedidos();
+
+              case 4:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+
+      function componentDidMount() {
+        return _componentDidMount.apply(this, arguments);
+      }
+
+      return componentDidMount;
+    }()
+  }, {
+    key: "componentDidUpdate",
+    value: function componentDidUpdate(prevProps, prevState, nextState) {
+      // se recibe por props para actualizar si el estado es diferenete al prevProps
+      if (this.props.actualizar_compras != prevProps.actualizar_compras) {
+        this.getdata(); //this.getdatapedidos();
+      }
+    } //obtenemos los datos de uri
+
+  }, {
+    key: "getdata",
+    value: function () {
+      var _getdata = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+        var _this2 = this;
+
+        var pageNumber,
+            url,
+            _args2 = arguments;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                pageNumber = _args2.length > 0 && _args2[0] !== undefined ? _args2[0] : 1;
+                url = "/compras?page=".concat(pageNumber);
+                axios__WEBPACK_IMPORTED_MODULE_2___default.a.get(url).then(function (response) {
+                  _this2.setState({
+                    compras: response.data
+                  }); //console.log(response.data)
+
+                })["catch"](function (error) {
+                  alert("Error " + error);
+                });
+
+              case 3:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
+      }));
+
+      function getdata() {
+        return _getdata.apply(this, arguments);
+      }
+
+      return getdata;
+    }()
+  }, {
+    key: "enviarordenes",
+    value: function enviarordenes(event) {
+      var _this3 = this;
+
+      event.preventDefault();
+      var formData = new FormData();
+      formData.append('cod_pedido', this.state.formCodigoPedido);
+      formData.append('datos_pedidos', JSON.stringify([this.state.selectedOption]));
+
+      if (this.state.formCodigoPedido != '') {
+        axios.post('/ordenes/insert', formData).then(function (response) {
+          if (response.data.success == true) {
+            _this3.setState({
+              modal: false
+            });
+
+            _this3.getdata();
+          }
+        })["catch"](function (error) {
+          console.log("Error " + error);
+        });
+      } else {
+        this.setState({
+          validacion: 'Campo obligatorio'
+        });
+      }
+    }
+  }, {
+    key: "enviarUpdateOrden",
+    value: function enviarUpdateOrden(event) {
+      var _this4 = this;
+
+      event.preventDefault();
+      var formData = new FormData();
+      formData.append('orden_cod', this.state.formCodigo);
+      formData.append('pedido_cod_pedido', this.state.pedidos);
+
+      if (this.state.formCodigo != '' && this.state.pedidos != '') {
+        axios.post('/ordenes/update', formData).then(function (response) {
+          if (response.data.success == true) {
+            _this4.setState({
+              modalDelete: false
+            });
+
+            _this4.getdata();
+          }
+        })["catch"](function (error) {
+          console.log("Error " + error);
+        });
+      } else {
+        this.setState({
+          validacion: 'Campo obligatorio'
+        });
+      }
+    }
+  }, {
+    key: "imprimirOrden",
+    value: function imprimirOrden(event) {
+      event.preventDefault();
+      var formData = new FormData();
+      formData.append('orden_cod', this.state.formCodigo);
+
+      if (this.state.formCodigo != '') {
+        window.open('/imprimir?orden_cod=' + this.state.formCodigo);
+      } else {
+        this.setState({
+          validacion: 'Campo obligatorio'
+        });
+      }
+    }
+  }, {
+    key: "getdatapedidos",
+    value: function () {
+      var _getdatapedidos = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
+        var _this5 = this;
+
+        var url;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                url = '/pedidos_compras';
+                axios__WEBPACK_IMPORTED_MODULE_2___default.a.get(url).then(function (response) {
+                  _this5.setState({
+                    pedidos: response.data
+                  });
+                })["catch"](function (error) {
+                  alert("Error " + error);
+                });
+
+              case 2:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3);
+      }));
+
+      function getdatapedidos() {
+        return _getdatapedidos.apply(this, arguments);
+      }
+
+      return getdatapedidos;
+    }() /// si no se le asgina el stare por defecto a una constante a realizar render el componente no encuentra el data de la api
+
+  }, {
+    key: "render",
+    value: function render() {
+      var _this6 = this;
+
+      var compras = this.state.compras;
+      var modal = this.state.modal;
+      var modalDelete = this.state.modalDelete;
+      var modalDeletedetalle = this.state.modalDeletedetalle;
+      var proveedores = this.state.proveedores;
+      var selectedOption = this.state.selectedOption; //const { pedidos } = this.state;
+
+      var _this$state = this.state,
+          codigo = _this$state.codigo,
+          producto = _this$state.producto,
+          cantidad = _this$state.cantidad,
+          list = _this$state.list;
+      var _this$state$pedidos = this.state.pedidos,
+          data = _this$state$pedidos.data,
+          current_page = _this$state$pedidos.current_page,
+          per_page = _this$state$pedidos.per_page,
+          total = _this$state$pedidos.total,
+          to = _this$state$pedidos.to,
+          from = _this$state$pedidos.from;
+
+      var handleChangeOption = function handleChangeOption(selectedOption) {
+        _this6.setState({
+          selectedOption: selectedOption
+        });
+
+        var formData = new FormData();
+        formData.append('cod_pedido_pedido', selectedOption.value);
+        axios.post('/pedidos/get_detalle', formData).then(function (response) {
+          //console.log(response.data);
+          var total = 0;
+          response.data.map(function (item) {
+            total = total + item.precioc * item.cantidad;
+          });
+
+          _this6.setState({
+            total: total
+          }); // console.log(total);
+
+
+          _this6.setState({
+            lista: response.data,
+            formCodigoPedido: selectedOption.value
+          }); //console.log(this.state.lista);
+
+        })["catch"](function (error) {
+          alert("Error " + error);
+        });
+        axios.post('/pedidos_compras_proveedor', formData).then(function (response) {
+          //this.setState({ formProveedor: response.data });
+          //console.log(this.state.formProveedor);
+          response.data.map(function (prov, index) {
+            _this6.setState({
+              formProveedor: prov.prov_descr
+            });
+          });
+        })["catch"](function (error) {
+          alert("Error " + error);
+        });
+      }; // para realizar la busqueda
+
+
+      var buscador = function buscador(e) {
+        _this6.setState({
+          search: e.target.value
+        });
+      }; // abre el modal
+
+
+      var handleOpenModal = function handleOpenModal(event) {
+        event.preventDefault();
+
+        _this6.setState({
+          modal: true
+        });
+
+        _this6.getdatapedidos();
+      }; //cierra el modal
+
+
+      var handleCloseModal = function handleCloseModal(event) {
+        event.preventDefault(); // se limpia para state para evitar error al cerrar o abrir el modal
+
+        _this6.setState({
+          modal: false,
+          formCodigo: '',
+          validacion: '',
+          edit: false,
+          modalDelete: false,
+          // formordenes_cEstado: '',
+          formCantidad: '',
+          selectedOption: null,
+          formMercaderia: '',
+          list: [],
+          total: '',
+          formProveedor: ''
+        });
+
+        _this6.getdata();
+      }; // const handleOpenModalDelete = (item) => {
+      //     this.setState({ modalDelete: true })
+      //     //Modal.setAppElement('body');
+      //     this.setState({
+      //         formCodigoDetalle: item.ped_det_cod,
+      //         formCodigo: item.pedido_cod_pedido
+      //     })
+      // }
+
+
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_1___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+        className: "container"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+        className: "row"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("h1", null, "Compras")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("hr", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+        className: "row"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+        className: "m-1"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("button", {
+        className: "btn btn-success",
+        onClick: function onClick(event) {
+          return handleOpenModal(event);
+        }
+      }, "+ Nuevo Compras")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+        className: "offset-md-5 col-lg -10"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("input", {
+        className: "form-control col-lg -10",
+        label: "search",
+        icon: "search",
+        type: "text",
+        onChange: buscador,
+        placeholder: "Buscar  compras"
+      }))), compras && this.renderList()), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+        className: "modal"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react_bootstrap4_modal__WEBPACK_IMPORTED_MODULE_4___default.a, {
+        visible: modal,
+        onClickBackdrop: handleCloseModal,
+        dialogClassName: "modal-dialog modal-lg"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+        className: "modal-header "
+      }, this.state.edit ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("h1", null, "Ver  ordenes De Compras") : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("h1", null, "Nuevo Ordenes de Compras")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+        className: "modal-body"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("form", {
+        className: "container"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+        className: "form-group"
+      }, this.state.edit ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("input", {
+        type: "text",
+        className: "form-control",
+        value: this.state.datos_proveedor,
+        disabled: true
+      }) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("label", null, "Buscar Pedidos de Compras *"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react_select__WEBPACK_IMPORTED_MODULE_5__["default"], {
+        value: selectedOption,
+        onChange: handleChangeOption,
+        options: data,
+        isSearchable: true,
+        placeholder: "Busqueda de Pedidos"
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("span", {
+        className: "validacion"
+      }, this.state.validacion)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+        className: "form-group"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("label", null, "Proveedor *"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("input", {
+        type: "text",
+        className: "form-control",
+        value: this.state.formProveedor,
+        disabled: true
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("span", {
+        className: "validacion"
+      }, this.state.validacion)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("hr", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("table", {
+        className: "table table-bordered order-table table table-striped table-responsive-xl"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("thead", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("th", {
+        scope: "col"
+      }, "#"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("th", {
+        scope: "col"
+      }, "Mercaderia"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("th", {
+        scope: "col"
+      }, "Cantidad"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("th", {
+        scope: "col"
+      }, "Precio"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("th", {
+        scope: "col"
+      }, "Total"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("tbody", null, this.state.lista.map(function (item) {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("tr", {
+          key: item.ped_det_cod
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("td", null, item.ped_det_cod), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("td", null, item.merca_descr), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("td", null, item.cantidad), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("td", null, item.precioc), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("td", null, item.precioc * item.cantidad));
+      }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("p", {
+        className: "ml-5 pl-5 total"
+      }, " Total : ", this.state.total)))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+        className: "modal-footer"
+      }, this.state.edit ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("button", {
+        type: "submit",
+        className: "btn btn-success",
+        target: "_blank",
+        onClick: function onClick(event) {
+          return _this6.imprimirOrden(event);
+        }
+      }, "Imprimir")) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("button", {
+        type: "submit",
+        className: "btn btn-primary",
+        onClick: function onClick(event) {
+          return _this6.enviarordenes(event);
+        }
+      }, "Guardar"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("button", {
+        type: "button",
+        className: "btn btn-secondary ",
+        "data-dismiss": "modal",
+        onClick: handleCloseModal
+      }, "Cancelar")))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react_bootstrap4_modal__WEBPACK_IMPORTED_MODULE_4___default.a, {
+        visible: modalDelete,
+        onClickBackdrop: handleCloseModal,
+        className: ""
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+        className: "container"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+        className: "modal-header"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("h3", null, "Actualizar ordenes de Compras")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+        className: "modal-body"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("h3", null, "\xBFDesea actualizar este este?")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+        className: "modal-footer"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("button", {
+        type: "button",
+        className: "btn btn-secondary ",
+        "data-dismiss": "modal",
+        onClick: handleCloseModal
+      }, "Cancelar"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("button", {
+        className: "btn btn-danger",
+        onClick: function onClick(event) {
+          return _this6.enviarUpdateOrden(event);
+        }
+      }, "Eliminar")))));
+    }
+  }, {
+    key: "renderList",
+    value: function renderList() {
+      var _this7 = this;
+
+      var _this$state$compras = this.state.compras,
+          data = _this$state$compras.data,
+          current_page = _this$state$compras.current_page,
+          per_page = _this$state$compras.per_page,
+          total = _this$state$compras.total,
+          to = _this$state$compras.to,
+          from = _this$state$compras.from;
+      var color = this.state.color;
+      var selectedOption = this.state.selectedOption; // busca la funcion de busqueda
+
+      var filter = data.filter(function (res) {
+        var provedor = res.prov_descr.toLowerCase();
+        var mercaderia = res.mercaderia.toLowerCase();
+        var estado = res.ped_estado;
+        var campo = mercaderia + ' ' + provedor; //console.log('lista');
+        //console.log(this.state.productos.data)
+
+        return campo.toLowerCase().indexOf(_this7.state.search.toLowerCase()) > -1;
+      });
+
+      var editordenes = function editordenes(ordenes) {
+        console.log(ordenes);
+        var formData = new FormData();
+
+        _this7.setState({
+          //selectedOption: ordenes.datos_pedidos,
+          modal: true,
+          edit: true,
+          formCodigo: ordenes.orden_cod,
+          formProveedor: ordenes.prov_descr,
+          datos_proveedor: ordenes.datos_proveedores,
+          selectedOption: ordenes.datos_pedidos
+        });
+
+        formData.append('cod_pedido_pedido', ordenes.cod_pedido);
+        axios.post('/pedidos/get_detalle', formData).then(function (response) {
+          //console.log(response.data);
+          var total = 0;
+          response.data.map(function (item) {
+            total = total + item.precioc * item.cantidad;
+          });
+
+          _this7.setState({
+            total: total
+          }); // console.log(total);
+
+
+          _this7.setState({
+            lista: response.data
+          }); //console.log(this.state.selectedOption);
+
+        })["catch"](function (error) {
+          alert("Error " + error);
+        }); // this.state.lista.map((item) => {
+        //     let totales = 0;
+        //     totales = totales + (item.precioc * item.cantidad);
+        //     this.setState({total:totales});
+        //     //return true
+        // })
+        // console.log(this.state.total);
+      };
+
+      var handleOpenModalDelete = function handleOpenModalDelete(ordenes) {
+        _this7.setState({
+          modalDelete: true
+        }); //Modal.setAppElement('body');
+
+
+        _this7.setState({
+          formCodigo: ordenes.orden_cod,
+          pedidos: ordenes.cod_pedido
+        });
+      };
+
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_1___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+        className: ""
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("table", {
+        className: "table table-bordered order-table table table-striped table-responsive-xl  "
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("thead", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("th", null, "#"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("th", null, "Codigo Orden"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("th", null, "Codigo de Pedido"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("th", null, "Proveedor"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("th", null, "Fecha de pedido"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("th", null, "Fecha de Orden de Compra"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("th", null, "Estado"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("th", null, "Accion"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("tbody", {
+        id: "bodytable"
+      }, filter.map(function (compras, index) {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("tr", {
+          key: index
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("td", null, compras.cod_com), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("td", null, compras.orden_cod), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("td", null, compras.cod_pedido), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("td", null, compras.prov_descr), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("td", null, compras.ped_fecha), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("td", null, compras.fechaorden), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("span", {
+          style: {
+            backgroundColor: compras.color,
+            color: 'white'
+          }
+        }, compras.estado_orden)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("button", {
+          className: "btn btn-info",
+          onClick: function onClick() {
+            return editordenes(compras, _this7.setState({
+              edit: true
+            }));
+          }
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("i", {
+          className: "fa fa-eye",
+          "aria-hidden": "true"
+        })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("button", {
+          className: "btn btn-danger",
+          onClick: function onClick() {
+            return handleOpenModalDelete(compras);
+          }
+        }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("i", {
+          className: "fa fa-pencil-square-o",
+          "aria-hidden": "true"
+        }))));
+      }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+        className: "d-flex justify-content-center"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("ul", {
+        className: ""
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react_js_pagination__WEBPACK_IMPORTED_MODULE_3___default.a, {
+        itemClass: "page-item",
+        linkClass: "page-link",
+        activePage: this.state.compras.current_page,
+        itemsCountPerPage: this.state.compras.per_page,
+        totalItemsCount: this.state.compras.total,
+        onChange: function onChange(pageNumber) {
+          return _this7.getdata(pageNumber);
+        }
+      })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+        className: "totales_grid"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("p", {
+        className: ""
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("b", null, "Pagina : "), this.state.compras.current_page, " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("b", null, "de "), "  ", this.state.compras.to, " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("b", null, "Total de datos mostrado :"), " ", this.state.compras.total, " ")))));
+    }
+  }]);
+
+  return Compras;
+}(react__WEBPACK_IMPORTED_MODULE_1__["Component"]);
+
+/* harmony default export */ __webpack_exports__["default"] = (Compras);
+
+/***/ }),
+
 /***/ "./resources/js/components/compras/Orden_Compras.js":
 /*!**********************************************************!*\
   !*** ./resources/js/components/compras/Orden_Compras.js ***!
@@ -84284,8 +84958,12 @@ var Orden_Compras = /*#__PURE__*/function (_Component) {
   }, {
     key: "componentDidUpdate",
     value: function componentDidUpdate(prevProps, prevState, nextState) {
-      // se recibe por props para actualizar si el estado es diferenete al prevProps
-      if (this.props.actualizar != prevProps.actualizar) {
+      // se recibe por props para actualizar si el estado es diferenete al prevPropscon
+      console.log(this.props.actualizar_orden);
+      console.log(prevProps.actualizar_orden);
+
+      if (this.props.actualizar_orden != prevProps.actualizar_orden) {
+        //this.props.actualizar_orden(false)
         this.getdata(); //this.getdatapedidos();
       }
     } //obtenemos los datos de uri
@@ -85607,8 +86285,8 @@ var Pedidos = /*#__PURE__*/function (_Component) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\Sergio0o\Desktop\Proyecto\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\Sergio0o\Desktop\Proyecto\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\Users\Sergio Amarilla\Desktop\Proyecto\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\Sergio Amarilla\Desktop\Proyecto\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

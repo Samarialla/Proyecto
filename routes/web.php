@@ -97,3 +97,11 @@ Route::post('/pedidos/delete_pedido','PedidosController@delete_pedido')->name('p
 Route::get('/ordenes','Orden_ComprasController@get_ordenCompras')->name('ordenes_compras');
 Route::post('/ordenes/insert','Orden_ComprasController@create')->name('ordenes_compras');
 Route::post('/ordenes/update','Orden_ComprasController@update')->name('ordenes_compras');
+
+
+/**
+ * 
+ * rutas de compras
+ * 
+ */
+Route::get('/compras','ComprasController@get_Compras')->name('compras');

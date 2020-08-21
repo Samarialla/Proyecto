@@ -16,6 +16,7 @@ import Axios from 'axios';
 import Pedidos from "./compras/Pedidos";
 import Productos from "./Productos";
 import Orden_Compras from "./compras/Orden_Compras";
+import Compras from "./compras/Compras";
 
 /*
 notas se pueder realizar que el nav bar y el secundarios esten esten el mismo compente asi para evitar el problema de child 
@@ -31,7 +32,9 @@ class Menu extends Component {
         super(props);
         this.state = {
             modulos: '',
-            estado: false
+            estado: false,
+            estado_orden:false,
+            estado_compras:false
 
         }
         // console.log(window.location);
@@ -80,10 +83,13 @@ class Menu extends Component {
 
             switch (`${eventKey}`) {
                 case '#Pedidos':
-                    this.setState({ estado: true })
+                    this.setState({ estado: true, estado_orden:false, estado_compras :false })
                     break;
                 case '#Orden_Compras':
-                    this.setState({ estado: false })
+                    this.setState({ estado_orden: true , estado: false , estado_compras:false})
+                    break;
+                    case '#Compras':
+                    this.setState({ estado_orden: false , estado: false , estado_compras:true})
                     break;
                 default:
                     break;
@@ -123,10 +129,13 @@ class Menu extends Component {
                                         <Productos />
                                     </Tab.Pane>
                                     <Tab.Pane eventKey="#Orden_Compras">
-                                        <Orden_Compras actualizar={this.state.estado} />
+                                        <Orden_Compras actualizar_orden={this.state.estado_orden} />
                                     </Tab.Pane>
                                     <Tab.Pane eventKey="#Pedidos">
                                         <Pedidos actualizar={this.state.estado} />
+                                    </Tab.Pane>
+                                    <Tab.Pane eventKey="#Compras">
+                                        <Compras actualizar_compras={this.state.estado_compras} />
                                     </Tab.Pane>
 
 

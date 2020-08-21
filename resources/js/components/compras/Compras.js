@@ -5,12 +5,12 @@ import Modal from 'react-bootstrap4-modal';
 import Select from 'react-select';
 import { serialize, deserialize } from "react-serialize"
 
-class Orden_Compras extends Component {
+class Compras extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            dias: '',
+            compras: '',
             ordenes_c: null,
             modal: false,
             formCodigo: '',
@@ -47,13 +47,8 @@ class Orden_Compras extends Component {
     }
 
     componentDidUpdate(prevProps, prevState, nextState) {
-        // se recibe por props para actualizar si el estado es diferenete al prevPropscon
-        console.log(this.props.actualizar_orden);
-        console.log(prevProps.actualizar_orden);
-
-        if (this.props.actualizar_orden != prevProps.actualizar_orden) {
-            //this.props.actualizar_orden(false)
-            
+        // se recibe por props para actualizar si el estado es diferenete al prevProps
+        if (this.props.actualizar_compras != prevProps.actualizar_compras) {
             this.getdata();
             //this.getdatapedidos();
         }
@@ -61,9 +56,9 @@ class Orden_Compras extends Component {
 
     //obtenemos los datos de uri
     async getdata(pageNumber = 1) {
-        const url = `/ordenes?page=${pageNumber}`;
+        const url = `/compras?page=${pageNumber}`;
         Axios.get(url).then(response => {
-            this.setState({ ordenes_c: response.data })
+            this.setState({ compras: response.data })
             //console.log(response.data)
 
         }).catch(error => {
@@ -142,7 +137,7 @@ class Orden_Compras extends Component {
 
     /// si no se le asgina el stare por defecto a una constante a realizar render el componente no encuentra el data de la api
     render() {
-        const { ordenes_c } = this.state;
+        const { compras } = this.state;
         const { modal } = this.state;
         const { modalDelete } = this.state;
         const { modalDeletedetalle } = this.state;
@@ -239,21 +234,21 @@ class Orden_Compras extends Component {
             <>
                 <div className="container">
                     <div className='row'>
-                        <h1>Ordenes de Compras</h1>
+                        <h1>Compras</h1>
                     </div>
                     <hr />
                     <div className='row'>
                         <div className='m-1'>
-                            <button className='btn btn-success' onClick={(event) => handleOpenModal(event)}>+ Nuevo Orden de Compras</button>
+                            <button className='btn btn-success' onClick={(event) => handleOpenModal(event)}>+ Nuevo Compras</button>
                         </div>
                         <div className='offset-md-5 col-lg -10'>
                             <input className="form-control col-lg -10" label="search" icon="search" type="text" onChange={buscador}
-                                placeholder="Buscar ordenes_c de compras"></input>
+                                placeholder="Buscar  compras"></input>
                         </div>
                     </div>
-                    {ordenes_c && this.renderList()}
+                    {compras && this.renderList()}
                 </div>
-                <div className='modal_ordenes_c'>
+                <div className='modal'>
                     <Modal visible={modal} onClickBackdrop={handleCloseModal} dialogClassName='modal-dialog modal-lg'>
 
                         <div className="modal-header ">
@@ -366,7 +361,7 @@ class Orden_Compras extends Component {
     }
 
     renderList() {
-        const { data, current_page, per_page, total, to, from } = this.state.ordenes_c;
+        const { data, current_page, per_page, total, to, from } = this.state.compras;
         const { color } = this.state;
         const { selectedOption } = this.state;
 
@@ -448,9 +443,9 @@ class Orden_Compras extends Component {
                         <thead >
                             <tr >
                                 <th>#</th>
-                                <th >Codigo Pedido</th>
+                                <th >Codigo Orden</th>
+                                <th>Codigo de Pedido</th>
                                 <th>Proveedor</th>
-                                <th>Mercaderia</th>
                                 <th>Fecha de pedido</th>
                                 <th>Fecha de Orden de Compra</th>
                                 <th>Estado</th>
@@ -458,19 +453,19 @@ class Orden_Compras extends Component {
                             </tr>
                         </thead>
                         <tbody id="bodytable">
-                            {filter.map((ordenes, index) => {
+                            {filter.map((compras, index) => {
 
-                                return <tr key={ordenes.orden_cod}>
-                                    <td>{ordenes.orden_cod}</td>
-                                    <td>{ordenes.cod_pedido}</td>
-                                    <td >{ordenes.prov_descr}</td>
-                                    <td>{ordenes.mercaderia}</td>
-                                    <td>{ordenes.ped_fecha}</td>
-                                    <td>{ordenes.fechaorden}</td>
-                                    <td ><span style={{ backgroundColor: ordenes.color, color: 'white' }}>{ordenes.estado_orden}</span></td>
+                                return <tr key={index}>
+                                    <td>{compras.cod_com}</td>
+                                    <td>{compras.orden_cod}</td>
+                                    <td>{compras.cod_pedido}</td>
+                                    <td >{compras.prov_descr}</td>
+                                    <td>{compras.ped_fecha}</td>
+                                    <td>{compras.fechaorden}</td>
+                                    <td ><span style={{ backgroundColor: compras.color, color: 'white' }}>{compras.estado_orden}</span></td>
                                     <td>
-                                        <button className='btn btn-info' onClick={() => editordenes(ordenes, this.setState({ edit: true }))}><i className="fa fa-eye" aria-hidden="true"></i></button>
-                                        <button className='btn btn-danger' onClick={() => handleOpenModalDelete(ordenes)}><i className="fa fa-pencil-square-o" aria-hidden="true"></i></button>
+                                        <button className='btn btn-info' onClick={() => editordenes(compras, this.setState({ edit: true }))}><i className="fa fa-eye" aria-hidden="true"></i></button>
+                                        <button className='btn btn-danger' onClick={() => handleOpenModalDelete(compras)}><i className="fa fa-pencil-square-o" aria-hidden="true"></i></button>
                                     </td>
 
                                 </tr>
@@ -483,15 +478,15 @@ class Orden_Compras extends Component {
                             <Pagination
                                 itemClass="page-item"
                                 linkClass="page-link"
-                                activePage={this.state.ordenes_c.current_page}
-                                itemsCountPerPage={this.state.ordenes_c.per_page}
-                                totalItemsCount={this.state.ordenes_c.total}
+                                activePage={this.state.compras.current_page}
+                                itemsCountPerPage={this.state.compras.per_page}
+                                totalItemsCount={this.state.compras.total}
                                 onChange={(pageNumber) => this.getdata(pageNumber)}
 
                             />
                         </ul>
                         <div className='totales_grid'>
-                            <p className=''><b>Pagina : </b>{this.state.ordenes_c.current_page} <b>de </b>  {this.state.ordenes_c.to} <b>Total de datos mostrado :</b> {this.state.ordenes_c.total} </p>
+                            <p className=''><b>Pagina : </b>{this.state.compras.current_page} <b>de </b>  {this.state.compras.to} <b>Total de datos mostrado :</b> {this.state.compras.total} </p>
                         </div>
                     </div>
                 </div>
@@ -502,4 +497,4 @@ class Orden_Compras extends Component {
 
 
 }
-export default Orden_Compras;
+export default Compras;

@@ -51,7 +51,8 @@ Route::get('/mercaderia','API\DatosController@get_mercaderia')->name('mercaderia
 Route::get('/modulos','API\DatosController@modulos')->name('modulos');
 Route::get('/pedidos_compras','API\DatosController@get_pedidos_compras')->name('pedidos');
 Route::post('/pedidos_compras_proveedor','API\DatosController@get_proveedor_pedidos')->name('pedidos');
-Route::get('/imprimir','API\Imprimir@download')->name('imprimir');
+
+Route::get('/pedidos_orden','API\DatosController@get_orden_compras')->name('pedidos');
 
 
 
@@ -105,3 +106,16 @@ Route::post('/ordenes/update','Orden_ComprasController@update')->name('ordenes_c
  * 
  */
 Route::get('/compras','ComprasController@get_Compras')->name('compras');
+Route::post('/compras/lista_detalle_orden','ComprasController@lista_detalle_orden')->name('compras');
+Route::post('/compras/insert','ComprasController@create')->name('compras');
+Route::post('/compras/update','ComprasController@update')->name('compras');
+
+
+/**
+ * 
+ * 
+ * rutas para imprimir
+ */
+
+Route::get('/imprimir','API\Imprimir@download')->name('imprimir');
+Route::get('/imprimirCompras','API\Imprimir@downloadCompras')->name('imprimir');

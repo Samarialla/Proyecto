@@ -33,8 +33,8 @@ class Menu extends Component {
         this.state = {
             modulos: '',
             estado: false,
-            estado_orden:false,
-            estado_compras:false
+            estado_orden: false,
+            estado_compras: false
 
         }
         // console.log(window.location);
@@ -79,17 +79,17 @@ class Menu extends Component {
         const { modulos } = this.state;
 
         const handleSelect = (eventKey) => {
-            console.log(`${eventKey}`);
+            //console.log(`${eventKey}`);
 
             switch (`${eventKey}`) {
                 case '#Pedidos':
-                    this.setState({ estado: true, estado_orden:false, estado_compras :false })
+                    this.setState({ estado: true, estado_orden: false, estado_compras: false })
                     break;
                 case '#Orden_Compras':
-                    this.setState({ estado_orden: true , estado: false , estado_compras:false})
+                    this.setState({ estado_orden: true, estado: false, estado_compras: false })
                     break;
-                    case '#Compras':
-                    this.setState({ estado_orden: false , estado: false , estado_compras:true})
+                case '#Compras':
+                    this.setState({ estado_orden: false, estado: false, estado_compras: true })
                     break;
                 default:
                     break;
@@ -105,8 +105,6 @@ class Menu extends Component {
              */
 
             <>
-
-
                 <Tab.Container id="list-group-tabs-example" defaultActiveKey="#Bienvenido" onSelect={handleSelect}>
                     <Row>
                         <Col sm={2}>

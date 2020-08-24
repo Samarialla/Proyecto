@@ -48,12 +48,8 @@ class Orden_Compras extends Component {
 
     componentDidUpdate(prevProps, prevState, nextState) {
         // se recibe por props para actualizar si el estado es diferenete al prevPropscon
-        console.log(this.props.actualizar_orden);
-        console.log(prevProps.actualizar_orden);
-
         if (this.props.actualizar_orden != prevProps.actualizar_orden) {
             //this.props.actualizar_orden(false)
-            
             this.getdata();
             //this.getdatapedidos();
         }
@@ -119,7 +115,7 @@ class Orden_Compras extends Component {
         const formData = new FormData()
         formData.append('orden_cod', this.state.formCodigo);
         if (this.state.formCodigo != '') {
-            window.open('/imprimir?orden_cod='+this.state.formCodigo)
+            window.open('/imprimir?orden_cod=' + this.state.formCodigo)
         } else {
             this.setState({ validacion: 'Campo obligatorio' })
         }
@@ -389,7 +385,7 @@ class Orden_Compras extends Component {
         });
 
         const editordenes = (ordenes) => {
-            console.log(ordenes);
+            //console.log(ordenes);
             const formData = new FormData()
             this.setState({
                 //selectedOption: ordenes.datos_pedidos,

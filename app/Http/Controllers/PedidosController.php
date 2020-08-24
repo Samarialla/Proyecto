@@ -76,7 +76,7 @@ class PedidosController extends Controller
 
     public function lista_detalle(Request $request)
     {
-        
+               
         $id_pedido = $request->input('cod_pedido_pedido')=='undefined'? $request->input('cod_pedido'):$request->input('cod_pedido_pedido');
         $cod_pedido = $request->input('cod_pedido');
         $productos = DB::table('pedido_detalle  as pd')

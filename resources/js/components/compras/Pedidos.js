@@ -228,6 +228,7 @@ class Pedidos extends Component {
         const { mercaderias } = this.state;
         const { codigo, producto, cantidad, list } = this.state;
         const { data, current_page, per_page, total, to, from } = this.state.mercaderias;
+        //console.log(this.state.mercaderias);
 
 
         const handleChangeOption = selectedOption => {

@@ -221,15 +221,6 @@ class Orden_Compras extends Component {
         }
 
 
-        // const handleOpenModalDelete = (item) => {
-        //     this.setState({ modalDelete: true })
-        //     //Modal.setAppElement('body');
-        //     this.setState({
-        //         formCodigoDetalle: item.ped_det_cod,
-        //         formCodigo: item.pedido_cod_pedido
-        //     })
-        // }
-
         return (
 
             <>
@@ -284,11 +275,6 @@ class Orden_Compras extends Component {
                                 <div>
                                     <div className='form-group'>
                                         <label>Proveedor *</label>
-
-                                        {/* <select name="prov_descr" className="form-control " value={this.state.formProveedor} onChange={handleChangeProveedor}>
-                                            <option></option>
-                                            {proveedores && this.cargarComboProveedor()}
-                                        </select> */}
                                         <input type='text' className='form-control' value={this.state.formProveedor} disabled={true} ></input>
                                     </div>
                                     <span className='validacion'>{this.state.validacion}</span>
@@ -410,18 +396,9 @@ class Orden_Compras extends Component {
                 this.setState({
                     lista: response.data
                 });
-                //console.log(this.state.selectedOption);
             }).catch(error => {
                 alert("Error " + error);
             })
-
-            // this.state.lista.map((item) => {
-            //     let totales = 0;
-            //     totales = totales + (item.precioc * item.cantidad);
-            //     this.setState({total:totales});
-            //     //return true
-            // })
-            // console.log(this.state.total);
 
         }
 

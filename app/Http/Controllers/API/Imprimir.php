@@ -11,28 +11,15 @@ class Imprimir extends Controller
 {
     public function download(Request $request)
     {
-        //$pdf= App::make('dompdf.wrapper');
         $orden_cod = $request->input('orden_cod');
         $pedido = $this->get_pedidos_detalle($orden_cod);
         $cabecera = $this->get_pedidos_cabecera($orden_cod);
-        // return json_encode($pedido);
         $data = [
             'pedidos' => $pedido,
             'cabecera' => $cabecera
         ];
-        //return view('orden_compras', $data);
-
-        // //$pdf->loadHTML('<p>hola</p>');
-        // //$pdf->loadView('orden_compras');
         $pdf = PDF::loadView('orden_compras', $data)->setPaper('a4', 'landscape');
-
-        // //return $pdf->download('archivo.pdf');
         return $pdf->stream();
-
-        // foreach (($pedido) as $key => $value) {
-        //     var_dump($value->merca_descr);
-        //     # code...
-        // }
     }
 
     public function get_pedidos_detalle($id_orden)
@@ -69,31 +56,19 @@ class Imprimir extends Controller
 
     public function downloadCompras(Request $request)
     {
-        //$pdf= App::make('dompdf.wrapper');
         $cod = $request->input('cod_com');
         $pedido = $this->get_orden_detalle($cod);
         $cabecera = $this->get_orden_cabecera($cod);
-        // return json_encode($pedido);
         $data = [
             'pedidos' => $pedido,
             'cabecera' => $cabecera
         ];
-        //return view('orden_compras', $data);
 
-        // //$pdf->loadHTML('<p>hola</p>');
-        // //$pdf->loadView('orden_compras');
         $pdf = PDF::loadView('compras', $data)->setPaper('a4', 'landscape');
 
-        // //return $pdf->download('archivo.pdf');
         return $pdf->stream();
-
-        // foreach (($pedido) as $key => $value) {
-        //     var_dump($value->merca_descr);
-        //     # code...
-        // }
     }
 
-    
     public function get_orden_detalle($cod)
     {
 
@@ -124,5 +99,4 @@ class Imprimir extends Controller
             ->get();
         return $pedidos;
     }
-
 }

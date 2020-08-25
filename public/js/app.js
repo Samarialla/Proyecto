@@ -82257,14 +82257,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _Principal__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Principal */ "./resources/js/components/Principal.js");
-/* harmony import */ var _Menu__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Menu */ "./resources/js/components/Menu.js");
-/* harmony import */ var _Clientes__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Clientes */ "./resources/js/components/Clientes.js");
-/* harmony import */ var _Bienvenido__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Bienvenido */ "./resources/js/components/Bienvenido.js");
-/* harmony import */ var _Productos__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Productos */ "./resources/js/components/Productos.js");
-/* harmony import */ var _agendaMedica_AgendaMedica__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./agendaMedica/AgendaMedica */ "./resources/js/components/agendaMedica/AgendaMedica.js");
+/* harmony import */ var _Menu__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Menu */ "./resources/js/components/Menu.js");
+/* harmony import */ var _Clientes__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Clientes */ "./resources/js/components/Clientes.js");
+/* harmony import */ var _Bienvenido__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Bienvenido */ "./resources/js/components/Bienvenido.js");
+/* harmony import */ var _Productos__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Productos */ "./resources/js/components/Productos.js");
+/* harmony import */ var _agendaMedica_AgendaMedica__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./agendaMedica/AgendaMedica */ "./resources/js/components/agendaMedica/AgendaMedica.js");
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 
 
 
@@ -82279,23 +82277,23 @@ var Index = function Index() {
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["BrowserRouter"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Switch"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], _defineProperty({
     exact: true,
     path: "/",
-    component: _Menu__WEBPACK_IMPORTED_MODULE_4__["default"]
+    component: _Menu__WEBPACK_IMPORTED_MODULE_3__["default"]
   }, "exact", true)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], _defineProperty({
     exact: true,
     path: "/Clientes",
-    component: _Clientes__WEBPACK_IMPORTED_MODULE_5__["default"]
+    component: _Clientes__WEBPACK_IMPORTED_MODULE_4__["default"]
   }, "exact", true)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], _defineProperty({
     exact: true,
     path: "/Bienvenido",
-    component: _Bienvenido__WEBPACK_IMPORTED_MODULE_6__["default"]
+    component: _Bienvenido__WEBPACK_IMPORTED_MODULE_5__["default"]
   }, "exact", true)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], _defineProperty({
     exact: true,
     path: "/agendaMedica/AgendaMedica",
-    component: _agendaMedica_AgendaMedica__WEBPACK_IMPORTED_MODULE_8__["default"]
+    component: _agendaMedica_AgendaMedica__WEBPACK_IMPORTED_MODULE_7__["default"]
   }, "exact", true)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], _defineProperty({
     exact: true,
     path: "/Productos",
-    component: _Productos__WEBPACK_IMPORTED_MODULE_7__["default"]
+    component: _Productos__WEBPACK_IMPORTED_MODULE_6__["default"]
   }, "exact", true))))
   /*<Router>
     <div>
@@ -82656,137 +82654,6 @@ var Menu = /*#__PURE__*/function (_Component) {
 if (document.getElementById('root')) {
   react_dom__WEBPACK_IMPORTED_MODULE_2___default.a.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(Menu, null), document.getElementById('root'));
 }
-
-/***/ }),
-
-/***/ "./resources/js/components/Principal.js":
-/*!**********************************************!*\
-  !*** ./resources/js/components/Principal.js ***!
-  \**********************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _Productos__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Productos */ "./resources/js/components/Productos.js");
-/* harmony import */ var _Bienvenido__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Bienvenido */ "./resources/js/components/Bienvenido.js");
-/* harmony import */ var _Clientes__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Clientes */ "./resources/js/components/Clientes.js");
-/* harmony import */ var _agendaMedica_AgendaMedica__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./agendaMedica/AgendaMedica */ "./resources/js/components/agendaMedica/AgendaMedica.js");
-function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
-
-function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-
-function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
-
-function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
-
-function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return; var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
-
-function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
-
-
-
-
-
-
-/**
- * no se utilizar mas por las mejoras que se van a realizar para obtener los modulos de
- * la base de datos 
- * 
- */
-
-var Principal = function Principal() {
-  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(false),
-      _useState2 = _slicedToArray(_useState, 2),
-      componente = _useState2[0],
-      setcomponente = _useState2[1];
-
-  var _useState3 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Bienvenido__WEBPACK_IMPORTED_MODULE_2__["default"], null)),
-      _useState4 = _slicedToArray(_useState3, 2),
-      bienvenido = _useState4[0],
-      setbienvenido = _useState4[1];
-
-  var _useState5 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(false),
-      _useState6 = _slicedToArray(_useState5, 2),
-      componenteProducto = _useState6[0],
-      setcomponenteProducto = _useState6[1];
-
-  var _useState7 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(false),
-      _useState8 = _slicedToArray(_useState7, 2),
-      componenteAgenda = _useState8[0],
-      setcomponenteAgenda = _useState8[1];
-
-  var ver = function ver() {
-    setcomponente( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Clientes__WEBPACK_IMPORTED_MODULE_3__["default"], null));
-    setcomponenteProducto(false);
-    setbienvenido(false);
-    setcomponenteAgenda(false);
-  };
-
-  var verProductos = function verProductos() {
-    setcomponente(false);
-    setcomponenteProducto( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Productos__WEBPACK_IMPORTED_MODULE_1__["default"], null));
-    setbienvenido(false);
-    setcomponenteAgenda(false);
-  };
-
-  var verAgenda = function verAgenda() {
-    setcomponente(false);
-    setcomponenteAgenda( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_agendaMedica_AgendaMedica__WEBPACK_IMPORTED_MODULE_4__["default"], null));
-    setbienvenido(false);
-    setcomponenteProducto(false);
-  };
-
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "row"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "col-lg-2 dashboard"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "col-lg-12"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
-    className: "nav flex-column"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
-    className: "nav-item"
-  }, "Referenciales", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-    className: "nav-link active",
-    href: "#",
-    onClick: function onClick() {
-      return ver();
-    }
-  }, " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-    className: " fa far fa-user m-1"
-  }), "Clientes"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-    className: "nav-link active",
-    href: "#",
-    onClick: function onClick() {
-      return verProductos();
-    }
-  }, " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-    className: " fa fa-apple m-1"
-  }), "Productos"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
-    className: "nav-item"
-  }, "Agendamiento", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-    className: "nav-link active",
-    href: "#",
-    onClick: function onClick() {
-      return verAgenda();
-    }
-  }, " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-    className: "fa fa-address-card m-1"
-  }), "Agenda Medica"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, "FadeIn/FadeOUT"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
-    className: "nav-item"
-  }, "DOM", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, "append/prepend"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, "before/after"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
-    className: "nav-item"
-  }, "Travensing", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, "parents/parent"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, "children/find")))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    className: "col-lg-9 principal"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-    id: "secundario"
-  }, bienvenido, componente, componenteProducto, componenteAgenda))));
-};
-
-/* harmony default export */ __webpack_exports__["default"] = (Principal);
 
 /***/ }),
 
@@ -85221,15 +85088,7 @@ var Orden_Compras = /*#__PURE__*/function (_Component) {
         });
 
         _this6.getdata();
-      }; // const handleOpenModalDelete = (item) => {
-      //     this.setState({ modalDelete: true })
-      //     //Modal.setAppElement('body');
-      //     this.setState({
-      //         formCodigoDetalle: item.ped_det_cod,
-      //         formCodigo: item.pedido_cod_pedido
-      //     })
-      // }
-
+      };
 
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_1___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
         className: "container"
@@ -85405,17 +85264,10 @@ var Orden_Compras = /*#__PURE__*/function (_Component) {
 
           _this7.setState({
             lista: response.data
-          }); //console.log(this.state.selectedOption);
-
+          });
         })["catch"](function (error) {
           alert("Error " + error);
-        }); // this.state.lista.map((item) => {
-        //     let totales = 0;
-        //     totales = totales + (item.precioc * item.cantidad);
-        //     this.setState({total:totales});
-        //     //return true
-        // })
-        // console.log(this.state.total);
+        });
       };
 
       var handleOpenModalDelete = function handleOpenModalDelete(ordenes) {
@@ -86291,8 +86143,8 @@ var Pedidos = /*#__PURE__*/function (_Component) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\Sergio Amarilla\Desktop\Proyecto\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\Sergio Amarilla\Desktop\Proyecto\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\Users\Sergio0o\Desktop\Proyecto\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\Sergio0o\Desktop\Proyecto\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

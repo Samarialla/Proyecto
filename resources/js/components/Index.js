@@ -1,7 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import ReactDOM from 'react-dom';
-import Principal from "./Principal";
 import Menu from "./Menu";
 import Clientes from "./Clientes";
 import Bienvenido from "./Bienvenido";
